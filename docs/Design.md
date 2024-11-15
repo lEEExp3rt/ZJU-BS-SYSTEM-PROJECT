@@ -4,7 +4,7 @@
 
 - 项目名称：商品比价网站
 - 项目周期：2024-09-01 ~ 2025-01-01
-- 项目仓库：[Github](https://github.com/lEEExp3rt/ZJU-BS-SYSTEM-PROJECT)
+- 项目仓库：[GitHub](https://github.com/lEEExp3rt/ZJU-BS-SYSTEM-PROJECT)
 - 项目概述：任选Web开发技术实现一个商品价格比较网站，要求实现
     - 用户注册与登录
     - 商品查询与比较
@@ -13,8 +13,6 @@
     - 适配手机样式
     - 界面友好
 - 面向对象：使用商品网站的用户群体，课程组
-
----
 
 ## 2 需求分析
 
@@ -34,13 +32,11 @@
 - 安全：实现用户注册与登录，信息安全保障、隐私设置
 - 交互：用户界面友好，适配手机
 
----
-
 ## 3 规划设计
 
 ### 3.1 系统架构
 
-```Mermaid
+```mermaid
 architecture-beta
     group app(cloud)[App]
 
@@ -67,8 +63,8 @@ architecture-beta
     - 数据库：MySQL
     - 爬虫框架：Scrapy
 - 开发环境
-    - 操作系统：Ubuntu-24.04
-    - 虚拟环境管理：Conda
+    - 操作系统：WSL2 + Ubuntu-24.04
+    - 包管理：Miniconda
     - 容器：Docker
     - 源代码管理：Git
 
@@ -133,6 +129,13 @@ architecture-beta
     - 定时功能
     - 订阅推送
 
+#### 3.3.7 爬虫模块
+
+- 主要功能
+    - 登录电商平台
+    - 信息爬取
+    - 本地存储
+
 ### 3.4 数据库设计
 
 #### 3.4.1 用户表 `users`
@@ -176,7 +179,7 @@ architecture-beta
 
 #### 3.4.4 E-R 图
 
-```Mermaid
+```mermaid
 erDiagram
     USERS {
         int user_id PK "用户ID"
@@ -223,8 +226,6 @@ erDiagram
 4. 用户可查看商品历史价格走势图
 5. 用户设置降价提醒，系统会定时检查商品价格变化并通知用户
 
----
-
 ## 4 开发计划
 
 1. 启动
@@ -242,9 +243,12 @@ erDiagram
       2. 调整
    3. 整合
 3. 测试
+      1. 后端正确性
+      2. 前端样式
 4. 交付
-
----
+   1. 容器打包
+   2. 发布Release
+   3. 上传
 
 ## 5 维护和支持
 
