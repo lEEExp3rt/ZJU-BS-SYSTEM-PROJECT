@@ -140,42 +140,45 @@ architecture-beta
 
 #### 3.4.1 用户表 `users`
 
-| 属性名 | 数据类型 | 备注 |
-| :--: | :--: | :--: |
-| `user_id` | `int` | 用户ID，主键 |
-| `user_name` | `str` | 用户名 |
-| `user_passwd` | `str` | 用户密码，哈希值存储 |
-| `user_email` | `str` | 用户邮箱 |
-| `user_createTime` | `str` | 账号创建时间 |
+| 属性名 | 数据类型 | 属性 | 备注 |
+| :--: | :--: | :--: | :--: |
+| `user_id` | `int` | 主键&自增&非空 | 用户ID |
+| `user_name` | `varchar(63)` | 非空&唯一 | 用户名 |
+| `password` | `varchar(63)` | 非空 | 用户密码 |
+| `email` | `varchar(255)` | 非空&唯一 | 用户邮箱 |
+| `create_time` | `timestamp` | 非空 | 创建时间 |
 
 #### 3.4.2 商品信息表 `products`
 
-| 属性名 | 数据类型 | 备注 |
-| :--: | :--: | :--: |
-| `product_id` | `int` | 商品ID，主键 |
-| `product_name` | `str` | 商品名 |
-| `product_category` | `str` | 商品类别 |
-| `product_barcode` | `str` | 商品条形码 |
-| `product_specification` | `str` | 商品说明 |
-| `product_image` | `str` | 商品图片信息，URL |
+| 属性名 | 数据类型 | 属性 | 备注 |
+| :--: | :--: | :--: | :--: |
+| `product_id` | `int` | 主键&非空&自增 | 商品ID |
+| `product_name` | `varchar(63)` | 非空 | 商品名 |
+| `category` | `varchar(63)` | 默认值空 | 商品类别 |
+| `description` | `varchar(255)` | 默认值空 | 商品说明 |
+| `scale` | `varchar(63)` | 默认值空 | 商品规格 |
+| `image` | `varchar(255)` | 默认值空 | 商品图片URL |
+| `platform` | `varchar(15)` | 默认值空 | 商品信息来源平台 |
 
 #### 3.4.3 商品价格表 `prices`
 
-| 属性名 | 数据类型 | 备注 |
-| :--: | :--: | :--: |
-| `product_id` | `int` | 商品ID，主键 |
-| `product_prices` | `dict` | 商品价格信息，<时间：价格> |
-| `product_platform` | `str` | 商品平台 |
+| 属性名 | 数据类型 | 属性 | 备注 |
+| :--: | :--: | :--: | :--: |
+| `product_id` | `int` | 非空&外键 | 商品ID |
+| `price` | `decimal(10,2)` | 默认值`0.00` | 商品价格 |
+| `checkpoint` | `timestamp` | 非空 | 商品平台 |
 
-#### 3.4.4 降价订阅表 `subscription`
+> 主键为`<product_id, checkpoint>`
 
-| 属性名 | 数据类型 | 备注 |
-| :--: | :--: | :--: |
-| `subscrip_id` | `int` | 订阅器ID，主键 |
-| `subscript_enable` | `bool` | 是否启用 |
-| `subscript_productID` | `int` | 订阅商品ID |
-| `subscript_userID` | `int` | 订阅用户ID |
-| `subscript_timer` | `double` | 定时器 |
+#### 3.4.4 降价订阅表 `subscriptions`
+
+| 属性名 | 数据类型 | 属性 | 备注 |
+| :--: | :--: | :--: | :--: |
+| `subscription_id` | `int` | 主键&非空&自增 | 订阅器ID |
+| `product_id` | `int` | 非空&外键 | 商品ID |
+| `user_id` | `int` | 非空&外键 | 用户ID |
+| `timer` | `time` | 默认值空 | 定时器 |
+| `enable` | `boolean` | 默认值`true` | 定时器是否开启 |
 
 #### 3.4.4 E-R 图
 
@@ -183,38 +186,40 @@ architecture-beta
 erDiagram
     USERS {
         int user_id PK "用户ID"
-        str user_name "用户名"
-        str user_passwd "用户密码"
-        str user_email "用户邮箱"
-        str user_createTime "账号创建时间"
+        varchar user_name "用户名"
+        varchar password "用户密码"
+        varchar email "用户邮箱"
+        timestamp create_time "创建时间"
     }
 
     PRODUCTS {
         int product_id PK "商品ID"
-        str product_name "商品名"
-        str product_category "商品类别"
-        str product_barcode "商品条形码"
-        str product_specification "商品说明"
-        str product_image "商品图片信息"
+        varchar product_name "商品名"
+        varchar category "商品类别"
+        varchar description "商品说明"
+        varchar scale "商品规格"
+        varchar image "商品图片URL"
+        varchar platform "商品信息来源平台"
     }
 
     PRICES {
-        int product_id PK "商品ID"
-        dict product_prices "商品价格信息"
-        str product_platform "商品平台"
+        int product_id FK "商品ID"
+        decimal price "商品价格"
+        timestamp checkpoint PK "更新时间"
     }
 
-    SUBSCRIPTION {
-        int subscrip_id PK "订阅器ID"
-        bool subscript_enable "是否启用"
-        int subscript_productID "订阅商品ID"
-        int subscript_userID "订阅用户ID"
-        double subscript_timer "定时器"
+    SUBSCRIPTIONS {
+        int subscription_id PK "订阅器ID"
+        int product_id FK "商品ID"
+        int user_id FK "用户ID"
+        time timer "定时器"
+        boolean enable "定时器状态"
     }
 
-    USERS ||--o{ SUBSCRIPTION : Subscribe
-    PRODUCTS ||--o{ PRICES : Related
-    PRODUCTS ||--o{ SUBSCRIPTION : Related
+    %% 定义关系
+    USERS ||--o{ SUBSCRIPTIONS : "user_id"
+    PRODUCTS ||--o{ SUBSCRIPTIONS : "product_id"
+    PRODUCTS ||--o{ PRICES : "product_id"
 
 ```
 
