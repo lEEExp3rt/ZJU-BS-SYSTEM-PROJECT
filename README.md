@@ -6,16 +6,22 @@
 
 ```Shell
 .
-├── CHANGELOG.md            # 变更日志
-├── README.md               # 自述文档
+├── CHANGELOG.md
+├── README.md
 ├── clean.sh
 ├── docs
-│   ├── Assignment.pdf      # 需求文档
-│   └── Design.md           # 设计文档
+│   ├── Assignment.pdf
+│   └── Design.md
 └── src
     ├── backend
+    │   ├── requirements.txt
+    │   └── utils
+    │       ├── ConnectConfig.py
+    │       ├── DatabaseConnector.py
+    │       ├── DatabaseInitializer.py
+    │       └── __init__.py
     ├── config
-    │   ├── application.yml # 数据库连接信息
-    │   └── db4mysql.sql    # 数据库创建脚本
+    │   ├── DBInitializer.sql
+    │   └── application.yml
     └── frontend
 ```
