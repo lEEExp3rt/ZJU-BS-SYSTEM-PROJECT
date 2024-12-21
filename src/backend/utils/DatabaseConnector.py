@@ -1,8 +1,14 @@
 """
 This file is used to establish a connection to the database.
+
+First load the configuration of the database when constructing, then use `connect()` to establish a connection to the database.
+
+After connection, you can use the `conn` to interact with the database.
+
+And don't forget to close the connection using `close()` to release the resources!
 """
 
-from ConnectConfig import ConnectConfig
+from .ConnectConfig import ConnectConfig
 import pymysql.cursors
 import pymysql
 
@@ -46,13 +52,6 @@ class DatabaseConnector:
 
         return self.__conn 
     
-    def getCursor(self) -> pymysql.cursors.Cursor:
-        """
-        Get a cursor to the connected database.
-        """
-
-        return self.__conn.cursor(self.cursorType)
-    
     def connect(self) -> None:
         """
         Connect to the database.
@@ -81,14 +80,3 @@ class DatabaseConnector:
                 self.__conn = None
             except Exception as e:
                 raise e
-    
-    def commit(self):
-        raise NotImplementedError()
-
-if __name__ == '__main__':
-    db = DatabaseConnector(ConnectConfig())
-    db.connect()
-    cursor = db.getCursor()
-    cursor.execute("select version()")
-    print(cursor.fetchone())
-    db.close()

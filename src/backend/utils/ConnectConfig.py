@@ -99,7 +99,3 @@ class ConnectConfig:
         """
 
         return self.__charset
-
-if __name__ == '__main__':
-    config = ConnectConfig()
-    print(config.__str__())
