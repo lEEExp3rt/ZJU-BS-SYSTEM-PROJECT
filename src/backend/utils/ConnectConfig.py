@@ -10,7 +10,7 @@ class ConnectConfig:
     Database connection configuration class.
     """
 
-    configFile = os.path.join(os.path.dirname(__file__), os.pardir, os.pardir, 'config', 'application.yml')
+    configFile = os.path.join(os.path.dirname(__file__), os.pardir, os.pardir, 'config', 'Application.yml')
 
     def __init__(self):
         """
@@ -43,14 +43,7 @@ class ConnectConfig:
         String representation of the connect config class.
         """
 
-        return (f"utils.ConnectConfig: ["
-                 "Host: {self.__host},"
-                 "Port: {self.__port},"
-                 "User: {self.__user},"
-                 "Password: {self.__password},"
-                 "Database: {self.__database},"
-                 "Charset: {self.__charset}"
-                 "]")
+        return f"ConnectConfig [Host = {self.__host}, Port = {self.__port}, User = {self.__user}, Password = {self.__password}, Database = {self.__database}, Charset = {self.__charset}]"
 
     @property
     def host(self) -> str:

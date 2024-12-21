@@ -1,3 +1,7 @@
+/**
+ * This file is used to initialize the database.
+ */
+
 create database if not exists `budget_bee` default character set utf8mb4 collate utf8mb4_bin;
 
 drop table if exists `subscriptions`;
