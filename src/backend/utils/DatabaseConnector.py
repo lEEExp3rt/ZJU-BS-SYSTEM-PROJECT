@@ -59,13 +59,15 @@ class DatabaseConnector:
 
         if self.__conn is None:
             try:
-                self.__conn = pymysql.connect(host=self.__config.host,
-                                              user=self.__config.user,
-                                              password=self.__config.password,
-                                              database=self.__config.database,
-                                              port=self.__config.port,
-                                              charset=self.__config.charset,
-                                              cursorclass=self.cursorType)
+                self.__conn = pymysql.connect(
+                    host=self.__config.host,
+                    user=self.__config.user,
+                    password=self.__config.password,
+                    database=self.__config.database,
+                    port=self.__config.port,
+                    charset=self.__config.charset,
+                    cursorclass=self.cursorType
+                )
             except Exception as e:
                 raise e
     
