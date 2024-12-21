@@ -26,8 +26,8 @@ class DatabaseConnector:
         :param config: The configuration of the database.
         """
 
-        self.__config = config
-        self.__conn = None
+        self.__config: ConnectConfig = config
+        self.__conn: pymysql.Connection = None
     
     def __del__(self):
         """

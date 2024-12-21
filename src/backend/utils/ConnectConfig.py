@@ -17,12 +17,12 @@ class ConnectConfig:
         Constructor of the connect config class.
         """
 
-        self.__host = None
-        self.__port = None
-        self.__user = None
-        self.__password = None
-        self.__database = None
-        self.__charset = None
+        self.__host: str = None
+        self.__port: int = None
+        self.__user: str = None
+        self.__password: str = None
+        self.__database: str = None
+        self.__charset: str = None
 
         try:
             with open(self.configFile, 'r', encoding='utf-8') as f:
