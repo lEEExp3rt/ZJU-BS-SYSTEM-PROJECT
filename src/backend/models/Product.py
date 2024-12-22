@@ -9,25 +9,37 @@ class Product:
     `Product` entity model.
     """
 
-    def __init__(self, id: int = None, name: str = None, category: str = None, description: str = None, scale: str = None, image: str = None, platform: Platform = None):
+    def __init__(
+        self,
+        id: int = None,
+        name: str = None,
+        description: str = None,
+        url: str = None,
+        image: str = None,
+        category: str = None,
+        scale: str = None,
+        platform: Platform = None
+    ):
         """
         Constructor of `Product` entity model.
 
         :param id: product id.
         :param name: product name.
-        :param category: product category.
         :param description: product description.
-        :param scale: product scale.
+        :param url: product URL.
         :param image: product image URL.
+        :param category: product category.
+        :param scale: product scale.
         :param platform: product platform.
         """
 
         self.__id = id
         self.__name = name
-        self.__category = category
         self.__description = description
-        self.__scale = scale
+        self.__url = url
         self.__image = image
+        self.__category = category
+        self.__scale = scale
         self.__platform = platform
     
     def __str__(self):
@@ -37,7 +49,16 @@ class Product:
         :return: string representation of `Product` entity model.
         """
 
-        return f"Product [id = {self.__id}, name = {self.__name}, category = {self.__category}, description = {self.__description}, scale = {self.__scale}, image = {self.__image}, platform = {self.__platform}]"
+        return f"Product [" \
+               f"id = {self.__id}, " \
+               f"name = {self.__name}, " \
+               f"description = {self.__description}, " \
+               f"url = {self.__url}, " \
+               f"image = {self.__image}, " \
+               f"category = {self.__category}, " \
+               f"scale = {self.__scale}, " \
+               f"platform = {self.__platform}" \
+               f"]"
 
     def __eq__(self, other: object) -> bool:
         """
@@ -50,7 +71,7 @@ class Product:
         if not isinstance(other, Product):
             return False
 
-        return self.__id == other.__id and self.__name == other.__name and self.__category == other.__category and self.__description == other.__description and self.__scale == other.__scale and self.__image == other.__image and self.__platform == other.__platform
+        return self.__id == other.__id and self.__name == other.__name and self.__description == other.__description and self.__url == other.__url and self.__image == other.__image and self.__category == other.__category and self.__scale == other.__scale and self.__platform == other.__platform
 
     @property
     def id(self) -> int:
@@ -69,14 +90,6 @@ class Product:
         return self.__name
 
     @property
-    def category(self) -> str:
-        """
-        Product category.
-        """
-
-        return self.__category
-
-    @property
     def description(self) -> str:
         """
         Product description.
@@ -85,12 +98,12 @@ class Product:
         return self.__description
 
     @property
-    def scale(self) -> str:
+    def url(self) -> str:
         """
-        Product scale.
+        Product URL.
         """
 
-        return self.__scale
+        return self.__url
 
     @property
     def image(self) -> str:
@@ -101,15 +114,31 @@ class Product:
         return self.__image
 
     @property
+    def category(self) -> str:
+        """
+        Product category.
+        """
+
+        return self.__category
+
+    @property
+    def scale(self) -> str:
+        """
+        Product scale.
+        """
+
+        return self.__scale
+
+    @property
     def platform(self) -> Platform:
         """
         Product platform.
         """
-    
+
         return self.__platform
     
     @id.setter
-    def id(self, id: int):
+    def id(self, id: int) -> None:
         """
         Set product id.
         """
@@ -117,47 +146,55 @@ class Product:
         self.__id = id
 
     @name.setter
-    def name(self, name: str):
+    def name(self, name: str) -> None:
         """
         Set product name.
         """
 
         self.__name = name
 
-    @category.setter
-    def category(self, category: str):
-        """
-        Set product category.
-        """
-
-        self.__category = category
-
     @description.setter
-    def description(self, description: str):
+    def description(self, description: str) -> None:
         """
         Set product description.
         """
 
         self.__description = description
 
-    @scale.setter
-    def scale(self, scale: str):
+    @url.setter
+    def url(self, url: str) -> None:
         """
-        Set product scale.
+        Set product URL.
         """
 
-        self.__scale = scale
+        self.__url = url
 
     @image.setter
-    def image(self, image: str):
+    def image(self, image: str) -> None:
         """
         Set product image URL.
         """
 
         self.__image = image
 
+    @category.setter
+    def category(self, category: str) -> None:
+        """
+        Set product category.
+        """
+
+        self.__category = category
+
+    @scale.setter
+    def scale(self, scale: str) -> None:
+        """
+        Set product scale.
+        """
+
+        self.__scale = scale
+
     @platform.setter
-    def platform(self, platform: Platform):
+    def platform(self, platform: Platform) -> None:
         """
         Set product platform.
         """

@@ -1,5 +1,5 @@
 /**
- * This file is used to initialize the database.
+ * This script is used to initialize the database.
  */
 
 create database if not exists `budget_bee` default character set utf8mb4 collate utf8mb4_bin;
@@ -19,12 +19,13 @@ create table `users` (
 ) engine=InnoDB charset=utf8mb4;
 
 create table `products` (
-    `product_id` int not null auto_increment,
+    `product_id` int not null,
     `product_name` varchar(63) not null,
-    `category` varchar(63) default null,
     `description` varchar(255) default null,
-    `scale` varchar(63) default null,
+    `url` varchar(255) default null,
     `image` varchar(255) default null,
+    `category` varchar(63) default null,
+    `scale` varchar(63) default null,
     `platform` varchar(15) default null,
     primary key (`product_id`)
 ) engine=InnoDB charset=utf8mb4;
