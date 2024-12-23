@@ -2,17 +2,19 @@
 This file defines the base spider class.
 """
 
-from models.Product import Product
-from utils.Configs import Platform
+from backend.models.Product import Product
+from backend.models.Price import Price
+from backend.utils.Configs import Platform
 from selenium import webdriver
 from abc import ABC, abstractmethod
+from typing import List, Tuple
 
 class Spider(ABC):
     """
     Spider interface.
     """
 
-    wait_time = 5
+    wait_time = 2
 
     def __init__(self, driver: webdriver.Chrome, platform: Platform):
         """
@@ -26,7 +28,7 @@ class Spider(ABC):
         self.__platform = platform
     
     @abstractmethod
-    def crawl(self, keyword: str, pages: int) -> list[Product]:
+    def crawl(self, keyword: str, pages: int) -> List[Tuple[Product, Price]]:
         """
         Crawl the site for the given keyword.
 

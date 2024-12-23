@@ -3,3 +3,4 @@ PyMySQL
 PyYAML
 cryptography
 selenium
+mmh3

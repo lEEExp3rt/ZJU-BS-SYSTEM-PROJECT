@@ -26,6 +26,8 @@ create table `products` (
     `image` varchar(255) default null,
     `category` varchar(63) default null,
     `scale` varchar(63) default null,
+    `shop` varchar(63) default null,
+    `checkpoint` timestamp not null,
     `platform` varchar(15) default null,
     primary key (`product_id`)
 ) engine=InnoDB charset=utf8mb4;

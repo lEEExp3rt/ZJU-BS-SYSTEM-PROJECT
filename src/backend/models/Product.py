@@ -2,7 +2,7 @@
 This file defines the `Product` entity model.
 """
 
-from utils.Configs import Platform
+from backend.utils.Configs import Platform
 
 class Product:
     """
@@ -18,6 +18,8 @@ class Product:
         image: str = None,
         category: str = None,
         scale: str = None,
+        shop: str = None,
+        checkpoint: float = None,
         platform: Platform = None
     ):
         """
@@ -30,6 +32,8 @@ class Product:
         :param image: product image URL.
         :param category: product category.
         :param scale: product scale.
+        :param shop: product shop name.
+        :param checkpoint: product's latest checkpoint.
         :param platform: product platform.
         """
 
@@ -40,8 +44,10 @@ class Product:
         self.__image = image
         self.__category = category
         self.__scale = scale
+        self.__shop = shop
+        self.__checkpoint = checkpoint
         self.__platform = platform
-    
+
     def __str__(self):
         """
         String representation of `Product` entity model.
@@ -57,6 +63,8 @@ class Product:
                f"image = {self.__image}, " \
                f"category = {self.__category}, " \
                f"scale = {self.__scale}, " \
+               f"shop = {self.__shop}, " \
+               f"checkpoint = {self.__checkpoint}, " \
                f"platform = {self.__platform}" \
                f"]"
 
@@ -71,7 +79,18 @@ class Product:
         if not isinstance(other, Product):
             return False
 
-        return self.__id == other.__id and self.__name == other.__name and self.__description == other.__description and self.__url == other.__url and self.__image == other.__image and self.__category == other.__category and self.__scale == other.__scale and self.__platform == other.__platform
+        return (
+            self.__id == other.__id and
+            self.__name == other.__name and
+            self.__description == other.__description and
+            self.__url == other.__url and
+            self.__image == other.__image and
+            self.__category == other.__category and
+            self.__scale == other.__scale and
+            self.__shop == other.__shop and
+            self.__checkpoint == other.__checkpoint and
+            self.__platform == other.__platform
+        )
 
     @property
     def id(self) -> int:
@@ -130,13 +149,29 @@ class Product:
         return self.__scale
 
     @property
+    def shop(self) -> str:
+        """
+        Product shop name.
+        """
+
+        return self.__shop
+    
+    @property
+    def checkpoint(self) -> float:
+        """
+        Product's latest checkpoint.
+        """
+
+        return self.__checkpoint
+
+    @property
     def platform(self) -> Platform:
         """
         Product platform.
         """
 
         return self.__platform
-    
+
     @id.setter
     def id(self, id: int) -> None:
         """
@@ -192,6 +227,22 @@ class Product:
         """
 
         self.__scale = scale
+
+    @shop.setter
+    def shop(self, shop: str) -> None:
+        """
+        Set product shop name.
+        """
+
+        self.__shop = shop
+    
+    @checkpoint.setter
+    def checkpoint(self, checkpoint: float) -> None:
+        """
+        Set product's latest checkpoint.
+        """
+
+        self.__checkpoint = checkpoint
 
     @platform.setter
     def platform(self, platform: Platform) -> None:
