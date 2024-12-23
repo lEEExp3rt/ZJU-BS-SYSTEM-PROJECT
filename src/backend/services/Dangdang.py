@@ -1,5 +1,5 @@
 """
-This file defines the spider used to crawl from Suning.
+This file defines the spider used to crawl from Dangdang.
 """
 
 from backend.services.Spider import Spider
@@ -17,23 +17,29 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
 from typing import List, Tuple
 
-class Suning(Spider):
+class Dangdang(Spider):
     """
-    [Suning](https://www.suning.com/) spider.
+    [Dangdang](https://www.dangdang.com/) spider.
     """
-
+    
     def __init__(self, driver: webdriver.Chrome):
-        super().__init__(driver, Platform.SUNING)
-
+        super().__init__(driver, Platform.DANGDANG)
+    
     def crawl(self, keyword, pages = 1) -> List[Tuple[Product, Price]]:
         try:
             # Open the site.
             self.driver.get(self.platform.value)
 
             # Find the search box and input the keyword.
-            search_box = self.driver.find_element(By.ID, "searchKeywords")
+            search_box = self.driver.find_element(By.ID, "key_S")
             search_box.send_keys(keyword)
             search_box.send_keys(Keys.ENTER)
+
+            # Check if there are any results.
+            try:
+                self.driver.find_element(By.CLASS_NAME, "search_null search_null02")
+            except NoSuchElementException:
+                return []
 
             # Get the products.
             price_format = re.compile(r"\d+\.\d{2}")
@@ -42,25 +48,26 @@ class Suning(Spider):
             checkpoint = time.time()
             for page in range(pages):
                 self.driver.find_element(By.TAG_NAME, "body").send_keys(Keys.END)
-                products = wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, "product-box")))
+                wait.until(EC.presence_of_all_elements_located((By.TAG_NAME, "li")))
+                products = self.driver.find_element(By.CLASS_NAME, "bigimg").find_elements(By.TAG_NAME, "li")
 
                 # Parse each product.
                 for product in products:
-                    name = product.find_element(By.CLASS_NAME, "title-selling-point").text
-                    try:
-                        description = product.find_element(By.CLASS_NAME, "title-selling-point").find_element(By.TAG_NAME, "em").get_attribute("innerText")
-                    except NoSuchElementException:
-                        description = None
-                    url = product.find_element(By.CLASS_NAME, "title-selling-point").find_element(By.TAG_NAME, "a").get_attribute("href")
-                    image_url = product.find_element(By.CLASS_NAME, "sellPoint").find_element(By.TAG_NAME, "img").get_attribute("src")
-                    category = None # TODO
+                    name = product.find_element(By.CLASS_NAME, "name").find_element(By.TAG_NAME, "a").get_attribute("title")
+                    description = name
+                    url = product.find_element(By.CLASS_NAME, "pic").get_attribute("href")
+                    image_url = product.find_element(By.TAG_NAME, "img").get_attribute("src")
+                    category = keyword
                     scale = None # TODO
                     id = mmh3.hash(key=url, signed=False)
                     try:
-                        shop = product.find_element(By.CLASS_NAME, "store-name").text
+                        shop = product.find_element(By.NAME, "itemlist-shop-name").text
                     except NoSuchElementException:
                         shop = None
-                    price = float(price_format.search(product.find_element(By.CLASS_NAME, "def-price").text).group())
+                    try:
+                        price = float(price_format.search(product.find_element(By.CLASS_NAME, "search_now_price").text).group())
+                    except NoSuchElementException:
+                        price = float(price_format.search(product.find_element(By.CLASS_NAME, "price_n").text).group())
                     result.append((
                         Product(
                             id=id,
@@ -82,7 +89,8 @@ class Suning(Spider):
                     ))
 
                 try:
-                    next_page = wait.until(EC.presence_of_element_located((By.ID, "nextPage")))
+                    next_page = wait.until(EC.presence_of_element_located((By.CLASS_NAME, "paging")))
+                    next_page = next_page.find_element(By.CLASS_NAME, "next").find_element(By.TAG_NAME, "a")
                 except TimeoutException:
                     break
                 else:

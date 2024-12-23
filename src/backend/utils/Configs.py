@@ -10,3 +10,4 @@ class Platform(Enum):
     """
 
     SUNING = "https://www.suning.com/"
+    DANGDANG = "https://www.dangdang.com/"
