@@ -8,7 +8,7 @@ After connection, you can use the `conn` to interact with the database.
 And don't forget to close the connection using `close()` to release the resources!
 """
 
-from backend.utils.ConnectConfig import ConnectConfig
+from backend.database.ConnectConfig import ConnectConfig
 import pymysql.cursors
 import pymysql
 

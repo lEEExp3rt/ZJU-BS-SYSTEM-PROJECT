@@ -5,7 +5,6 @@ The webdriver is Chrome.
 """
 
 import os
-from requests import options
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service as ChromeService
