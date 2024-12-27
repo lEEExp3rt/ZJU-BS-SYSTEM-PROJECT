@@ -23,7 +23,7 @@ class Product:
         platform: Platform = None
     ):
         """
-        Constructor of `Product` entity model.
+        Initializer of `Product` entity model.
 
         :param id: product id.
         :param name: product name.

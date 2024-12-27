@@ -9,7 +9,7 @@ class User:
 
     def __init__(self, id: int = None, name: str = None, password: str = None, email: str = None, create_time: str = None):
         """
-        Constructor of `User` entity model.
+        Initializer of `User` entity model.
 
         :param id: user id.
         :param name: user name.

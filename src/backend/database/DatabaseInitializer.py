@@ -8,9 +8,6 @@ class DatabaseInitializer:
     """
 
     def __init__(self):
-        """
-        Constructor.
-        """
 
         pass
 

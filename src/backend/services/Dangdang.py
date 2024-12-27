@@ -23,9 +23,11 @@ class Dangdang(Spider):
     """
     
     def __init__(self, driver: webdriver.Chrome):
+
         super().__init__(driver, Platform.DANGDANG)
     
     def crawl(self, keyword, pages = 1) -> List[Tuple[Product, Price]]:
+
         try:
             # Open the site.
             self.driver.get(self.platform.value)
@@ -37,8 +39,10 @@ class Dangdang(Spider):
 
             # Check if there are any results.
             try:
-                self.driver.find_element(By.CLASS_NAME, "search_null search_null02")
+                self.driver.find_element(By.CLASS_NAME, "search_null_ts")
             except NoSuchElementException:
+                pass
+            else:
                 return []
 
             # Get the products.

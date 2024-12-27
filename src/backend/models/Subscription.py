@@ -9,7 +9,7 @@ class Subscription:
 
     def __init__(self, sid: int = None, pid: int = None, uid: int = None, timer: str = None, enable: bool = None):
         """
-        Constructor of `Subscription` entity model.
+        Initializer of `Subscription` entity model.
 
         :param sid: subscription id.
         :param pid: product id.

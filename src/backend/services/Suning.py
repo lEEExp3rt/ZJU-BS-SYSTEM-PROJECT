@@ -23,9 +23,11 @@ class Suning(Spider):
     """
 
     def __init__(self, driver: webdriver.Chrome):
+
         super().__init__(driver, Platform.SUNING)
 
     def crawl(self, keyword, pages = 1) -> List[Tuple[Product, Price]]:
+
         try:
             # Open the site.
             self.driver.get(self.platform.value)

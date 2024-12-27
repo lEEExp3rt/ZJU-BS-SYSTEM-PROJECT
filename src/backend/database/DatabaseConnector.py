@@ -15,24 +15,18 @@ import pymysql
 class DatabaseConnector:
     """
     Database connector.
+
+    Use this class to establish a connection to the database and do operations on the database.
     """
 
     cursorType = pymysql.cursors.Cursor
 
-    def __init__(self, config: ConnectConfig):
-        """
-        Constructor.
+    def __init__(self):
 
-        :param config: The configuration of the database.
-        """
-
-        self.__config: ConnectConfig = config
+        self.__config: ConnectConfig = ConnectConfig()
         self.__conn: pymysql.Connection = None
     
     def __del__(self):
-        """
-        Destructor.
-        """
 
         self.close()
     

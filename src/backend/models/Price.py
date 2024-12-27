@@ -9,7 +9,7 @@ class Price:
 
     def __init__(self, id: int = None, price: float = None, checkpoint: str = None):
         """
-        Constructor of `Price` entity model.
+        Initializer of `Price` entity model.
 
         :param id: product id.
         :param price: product price at the checkpoint.

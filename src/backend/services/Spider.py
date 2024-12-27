@@ -18,7 +18,7 @@ class Spider(ABC):
 
     def __init__(self, driver: webdriver.Chrome, platform: Platform):
         """
-        Constructor.
+        Initializer.
 
         :param driver: The webdriver to use.
         :param platform: The platform to crawl.

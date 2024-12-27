@@ -13,9 +13,6 @@ class ConnectConfig:
     configFile = os.path.join(os.path.dirname(__file__), os.pardir, os.pardir, 'config', 'Application.yml')
 
     def __init__(self):
-        """
-        Constructor of the connect config class.
-        """
 
         self.__host: str = None
         self.__port: int = None
