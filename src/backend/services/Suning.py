@@ -5,7 +5,7 @@ This module defines the spider used to crawl from Suning.
 from backend.services.Spider import Spider
 from backend.models.Product import Product
 from backend.models.Price import Price
-from backend.utils.Configs import Platform
+from backend.utils.Platforms import Platform
 import time
 import re
 import mmh3

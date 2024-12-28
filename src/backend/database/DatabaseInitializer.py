@@ -2,13 +2,13 @@
 This module is used to initialize the database.
 """
 
-from backend.utils.Configs import DatabaseConfig
 import os
 import pymysql
 import click
+from flask import current_app
 
 
-db_initializer = os.path.join(os.path.dirname(__file__), os.pardir, os.pardir, 'DBInitializer.sql')
+db_initializer = os.path.join(os.path.dirname(__file__), os.pardir, os.pardir, 'configs', 'DBInitializer.sql')
 
 def init_db():
     """
@@ -22,13 +22,10 @@ def init_db():
             script = f.read()
 
             # Connect to the database.
-            config = DatabaseConfig()
             conn = pymysql.connect(
-                host=config.host,
-                user=config.user,
-                password=config.password,
-                database=config.database,
-                charset=config.charset
+                host=current_app.config['DB_HOST'],
+                password=current_app.config['DB_PASSWORD'],
+                user=current_app.config['DB_USER'],
             )
 
             # Execute the SQL script.

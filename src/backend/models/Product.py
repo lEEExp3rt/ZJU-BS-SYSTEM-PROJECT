@@ -2,7 +2,7 @@
 This module defines the `Product` entity model.
 """
 
-from backend.utils.Configs import Platform
+from backend.utils.Platforms import Platform
 
 class Product:
     """

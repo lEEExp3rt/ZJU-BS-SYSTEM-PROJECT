@@ -4,19 +4,18 @@ This module stores the application's configurations.
 
 import os
 import yaml
-from enum import Enum, unique
 
 
-config_file = os.path.join(os.path.dirname(__file__), os.pardir, os.pardir, "Appication.yml")
+config_file = os.path.join(os.path.dirname(__file__), os.pardir, "configs", "Application.yml")
 
-class DatabaseConfig:
+class Config:
     """
-    Database configuration.
+    The configuration of the application.
     """
 
     def __init__(self, config_file: str = config_file):
         """
-        Open the configuration file and load the database configuration.
+        Open the configuration file and load the application configuration.
         """
 
         self.__host: str = None
@@ -25,23 +24,25 @@ class DatabaseConfig:
         self.__password: str = None
         self.__database: str = None
         self.__charset: str = None
+        self.__instance_path: str = None
 
         try:
             with open(config_file, "r", encoding="utf-8") as f:
                 config = yaml.safe_load(f)
-                self.__host = config['host']
-                self.__port = config['port']
-                self.__user = config['user']
-                self.__password = config['password']
-                self.__database = config['database']
-                self.__charset = config['charset']
+                self.__host = config['Database']['host']
+                self.__port = config['Database']['port']
+                self.__user = config['Database']['user']
+                self.__password = config['Database']['password']
+                self.__database = config['Database']['database']
+                self.__charset = config['Database']['charset']
+                self.__instance_path = config['Build']['instance_path']
         except FileNotFoundError:
-            raise FileNotFoundError("Database configuration file not found.")
+            raise FileNotFoundError("Application configuration file not found.")
         except yaml.YAMLError:
-            raise yaml.YAMLError("Error while loading database configuration file.")
+            raise yaml.YAMLError("Error while loading application configuration file.")
 
     @property
-    def host(self) -> str:
+    def DB_HOST(self) -> str:
         """
         Get the host to connect to the database.
         """
@@ -49,7 +50,7 @@ class DatabaseConfig:
         return self.__host
 
     @property
-    def port(self) -> int:
+    def DB_PORT(self) -> int:
         """
         Get the port to connect to the database.
         """
@@ -57,7 +58,7 @@ class DatabaseConfig:
         return self.__port
 
     @property
-    def user(self) -> str:
+    def DB_USER(self) -> str:
         """
         Get the user to connect to the database.
         """
@@ -65,7 +66,7 @@ class DatabaseConfig:
         return self.__user
 
     @property
-    def password(self) -> str:
+    def DB_PASSWORD(self) -> str:
         """
         Get the password to connect to the database.
         """
@@ -73,7 +74,7 @@ class DatabaseConfig:
         return self.__password
 
     @property
-    def database(self) -> str:
+    def DB_DATABASE(self) -> str:
         """
         Get the name of the database to connect to.
         """
@@ -81,19 +82,17 @@ class DatabaseConfig:
         return self.__database
 
     @property
-    def charset(self) -> str:
+    def DB_CHARSET(self) -> str:
         """
         Get the charset of the database.
         """
 
         return self.__charset
 
+    @property
+    def instance_path(self) -> str:
+        """
+        Get the path to the instance directory.
+        """
 
-@unique
-class Platform(Enum):
-    """
-    Supported platforms.
-    """
-
-    SUNING = "https://www.suning.com/"
-    DANGDANG = "https://www.dangdang.com/"
+        return self.__instance_path

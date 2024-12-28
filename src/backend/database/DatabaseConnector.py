@@ -1,19 +1,23 @@
 """
 This module is used to establish a connection to the database.
 
+:version: 0.8.0
+
+Use `get_db()` and `close_db()` to get a database connection and release the resources rather than creating a new instance every time.
+
+:version: 0.7.0
+
 First load the configuration of the database when constructing, then use `connect()` to establish a connection to the database.
 
 After connection, you can use the `conn` to interact with the database.
 
 And don't forget to close the connection using `close()` to release the resources!
 
-You can also use `get_db()` and `close_db()` to get a database connection and release the resources, respectively.
 """
 
-from backend.utils.Configs import DatabaseConfig
 import pymysql.cursors
 import pymysql
-from flask import g
+from flask import g, current_app
 
 
 class DatabaseConnector:
@@ -27,7 +31,7 @@ class DatabaseConnector:
 
     def __init__(self):
 
-        self.__config: DatabaseConfig = DatabaseConfig()
+        self.__config = current_app.config
         self.__conn: pymysql.Connection = None
 
     def __del__(self):
@@ -59,12 +63,12 @@ class DatabaseConnector:
 
         if self.__conn is None:
             self.__conn = pymysql.connect(
-                host=self.__config.host,
-                user=self.__config.user,
-                password=self.__config.password,
-                database=self.__config.database,
-                port=self.__config.port,
-                charset=self.__config.charset,
+                host=self.__config['DB_HOST'],
+                user=self.__config['DB_USER'],
+                password=self.__config['DB_PASSWORD'],
+                database=self.__config['DB_DATABASE'],
+                port=self.__config['DB_PORT'],
+                charset=self.__config['DB_CHARSET'],
                 cursorclass=self.cursorType
             )
 
@@ -82,19 +86,19 @@ def get_db() -> pymysql.Connection:
     """
     Get one database connection.
 
-    This function comes from Flask.
+    If the database connection is not established, establish a new connection, otherwise return the existing connection.
 
     :return: The database connection.
     """
 
     if 'db' not in g:
-        db = DatabaseConnector()
+        db = DatabaseConnector(current_app.config)
         db.connect()
         g.db = db.conn
 
     return g.db
 
-def close_db() -> None:
+def close_db(e=None) -> None:
     """
     Close the database connection.
 

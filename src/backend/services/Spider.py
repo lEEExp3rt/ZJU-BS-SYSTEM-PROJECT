@@ -4,7 +4,7 @@ This module defines the base spider class.
 
 from backend.models.Product import Product
 from backend.models.Price import Price
-from backend.utils.Configs import Platform
+from backend.utils.Platforms import Platform
 from selenium import webdriver
 from abc import ABC, abstractmethod
 from typing import List, Tuple

@@ -1,0 +1,14 @@
+# This file is used to configure the database connection information.
+
+# Database Configuration.
+Database:
+  host: "localhost"
+  port: 3306
+  user: "budgetbee"
+  password: "budgetBEE123"
+  database: "budget_bee"
+  charset: "utf8mb4"
+
+# Build Configuration.
+Build:
+  instance_path: "bin"
