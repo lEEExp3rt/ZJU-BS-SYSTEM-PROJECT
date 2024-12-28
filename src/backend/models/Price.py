@@ -1,5 +1,5 @@
 """
-This file defines the `Price` entity model.
+This module defines the `Price` entity model.
 """
 
 class Price:
@@ -7,7 +7,7 @@ class Price:
     `Price` entity model.
     """
 
-    def __init__(self, id: int = None, price: float = None, checkpoint: str = None):
+    def __init__(self, id: int = None, price: float = None, checkpoint: int = None):
         """
         Initializer of `Price` entity model.
 
@@ -59,7 +59,7 @@ class Price:
         return self.__price
     
     @property
-    def checkpoint(self) -> str:
+    def checkpoint(self) -> int:
         """
         Checkpoint of the current price.
         """
@@ -83,7 +83,7 @@ class Price:
         self.__price = price
     
     @checkpoint.setter
-    def checkpoint(self, checkpoint: str) -> None:
+    def checkpoint(self, checkpoint: int) -> None:
         """
         Set the checkpoint of the current price.
         """

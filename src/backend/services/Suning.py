@@ -1,5 +1,5 @@
 """
-This file defines the spider used to crawl from Suning.
+This module defines the spider used to crawl from Suning.
 """
 
 from backend.services.Spider import Spider
@@ -41,7 +41,7 @@ class Suning(Spider):
             price_format = re.compile(r"\d+\.\d{2}")
             result = []
             wait = WebDriverWait(self.driver, self.wait_time)
-            checkpoint = time.time()
+            checkpoint = int(time.time())
             for page in range(pages):
                 self.driver.find_element(By.TAG_NAME, "body").send_keys(Keys.END)
                 products = wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, "product-box")))

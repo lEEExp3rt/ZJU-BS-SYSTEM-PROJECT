@@ -1,8 +1,5 @@
-/**
- * This script is used to initialize the database.
- */
-
 create database if not exists `budget_bee` default character set utf8mb4 collate utf8mb4_bin;
+use `budget_bee`;
 
 drop table if exists `subscriptions`;
 drop table if exists `prices`;

@@ -1,5 +1,5 @@
 """
-This file defines the `User` entity model.
+This module defines the `User` entity model.
 """
 
 class User:

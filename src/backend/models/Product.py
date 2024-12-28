@@ -1,5 +1,5 @@
 """
-This file defines the `Product` entity model.
+This module defines the `Product` entity model.
 """
 
 from backend.utils.Configs import Platform
@@ -19,7 +19,7 @@ class Product:
         category: str = None,
         scale: str = None,
         shop: str = None,
-        checkpoint: float = None,
+        checkpoint: int = None,
         platform: Platform = None
     ):
         """
@@ -157,7 +157,7 @@ class Product:
         return self.__shop
     
     @property
-    def checkpoint(self) -> float:
+    def checkpoint(self) -> int:
         """
         Product's latest checkpoint.
         """
@@ -237,7 +237,7 @@ class Product:
         self.__shop = shop
     
     @checkpoint.setter
-    def checkpoint(self, checkpoint: float) -> None:
+    def checkpoint(self, checkpoint: int) -> None:
         """
         Set product's latest checkpoint.
         """

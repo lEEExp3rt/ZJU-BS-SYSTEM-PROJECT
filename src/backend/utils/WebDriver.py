@@ -1,5 +1,5 @@
 """
-This file gets a webdriver instance for spiders.
+This module gets a webdriver instance for spiders.
 
 The webdriver is Chrome.
 """

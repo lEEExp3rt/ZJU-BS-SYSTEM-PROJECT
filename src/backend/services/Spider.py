@@ -1,5 +1,5 @@
 """
-This file defines the base spider class.
+This module defines the base spider class.
 """
 
 from backend.models.Product import Product

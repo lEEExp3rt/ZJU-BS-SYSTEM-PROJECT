@@ -1,5 +1,5 @@
 """
-This file defines the `Subscription` entity model.
+This module defines the `Subscription` entity model.
 """
 
 class Subscription:
