@@ -2,5 +2,5 @@
 
 rm -rf bin/
 
-cd src/backend
+cd src/
 find . -name "__pycache__" -type d | xargs rm -rf

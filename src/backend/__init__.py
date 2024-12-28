@@ -18,17 +18,24 @@ def create_app() -> Flask:
     config = Configs.Config()
 
     # Create the Flask app instance
-    print(os.path.abspath(config.instance_path))
-    app = Flask(__name__, instance_path=os.path.abspath(config.instance_path))
+    app = Flask(
+        import_name="BudgetBEE",
+        instance_path=os.path.abspath(config.instance_path),
+        template_folder=os.path.abspath("src/backend/templates")
+    )
+
+    app.config.from_mapping(
+        SECRET_KEY='dev'
+    )
     app.config.from_object(config)
 
+    # Initialize the app.
     from .utils import AppInitializer
     AppInitializer.init_app(app)
 
     # Register the blueprints
-    # TODO
-    #from .routes.authentication import Authenticator
-    #app.register_blueprint(Authenticator.auth)
+    from .views import authentication
+    app.register_blueprint(authentication.auth)
 
     @app.route('/')
     def index():

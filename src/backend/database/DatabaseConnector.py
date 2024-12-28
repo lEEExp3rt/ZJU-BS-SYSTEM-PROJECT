@@ -3,7 +3,7 @@ This module is used to establish a connection to the database.
 
 :version: 0.8.0
 
-Use `get_db()` and `close_db()` to get a database connection and release the resources rather than creating a new instance every time.
+Use `get_conn()` and `close_conn()` to get a database connection and release the resources rather than creating a new instance every time.
 
 :version: 0.7.0
 
@@ -29,9 +29,9 @@ class DatabaseConnector:
 
     cursorType = pymysql.cursors.Cursor
 
-    def __init__(self):
+    def __init__(self, config):
 
-        self.__config = current_app.config
+        self.__config = config
         self.__conn: pymysql.Connection = None
 
     def __del__(self):
@@ -82,7 +82,7 @@ class DatabaseConnector:
             self.__conn = None
 
 
-def get_db() -> pymysql.Connection:
+def get_conn() -> pymysql.Connection:
     """
     Get one database connection.
 
@@ -98,7 +98,7 @@ def get_db() -> pymysql.Connection:
 
     return g.db
 
-def close_db(e=None) -> None:
+def close_conn(e=None) -> None:
     """
     Close the database connection.
 
