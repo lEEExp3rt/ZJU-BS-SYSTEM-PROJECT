@@ -3,6 +3,7 @@ This module defines the `Product` entity model.
 """
 
 from backend.utils.Platforms import Platform
+from datetime import datetime
 
 class Product:
     """
@@ -19,7 +20,7 @@ class Product:
         category: str = None,
         scale: str = None,
         shop: str = None,
-        checkpoint: int = None,
+        checkpoint: datetime = None,
         platform: Platform = None
     ):
         """
@@ -157,7 +158,7 @@ class Product:
         return self.__shop
     
     @property
-    def checkpoint(self) -> int:
+    def checkpoint(self) -> datetime:
         """
         Product's latest checkpoint.
         """
@@ -237,7 +238,7 @@ class Product:
         self.__shop = shop
     
     @checkpoint.setter
-    def checkpoint(self, checkpoint: int) -> None:
+    def checkpoint(self, checkpoint: datetime) -> None:
         """
         Set product's latest checkpoint.
         """

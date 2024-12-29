@@ -41,8 +41,8 @@ def register():
             with conn.cursor() as cursor:
                 try:
                     cursor.execute(
-                        "insert into `users` (`user_name`, `password`, `email`, `create_time`) values (?, ?, ?, unix_timestamp())",
-                        (username, generate_password_hash(password), email)
+                        "insert into `users` (`user_name`, `password`, `email`, `create_time`) values (%s, %s, %s, now())",
+                        (username, generate_password_hash(password=password, method='pbkdf2:sha256:10000', salt_length=8), email,)
                     )
                 except IntegrityError:
                     flash(f"Username {username} already exists.")
@@ -71,10 +71,11 @@ def login():
         else:
             conn = get_conn()
             with conn.cursor() as cursor:
-                result = cursor.execute(
-                    "select * from `users` where `user_name` = ?",
+                cursor.execute(
+                    "select * from `users` where `user_name` = %s",
                     (username, )
-                ).fetchone()
+                )
+                result = cursor.fetchone()
                 if result is None:
                     flash("Incorrect username.")
                 elif not check_password_hash(result[2], password):
@@ -88,7 +89,7 @@ def login():
                     flash(f"User {username} login successful.")
                     return redirect(url_for('index'))
 
-    return render_template('../templates/authentication/login.html')
+    return render_template('authentication/login.html')
 
 @auth.route('/logout')
 def logout():
@@ -114,10 +115,12 @@ def load_logged_in_user():
         g.user = None
     else:
         conn = get_conn()
-        g.user = conn.execute(
-            "select * from `users` where `user_id` = ?",
-            (user_id, )
-        ).fetchone()
+        with conn.cursor() as cursor:
+            cursor.execute(
+                "select * from `users` where `user_id` = %s",
+                (user_id,)
+            )
+            g.user = cursor.fetchone()
 
 def login_required(view):
     """

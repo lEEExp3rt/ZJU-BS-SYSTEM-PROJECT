@@ -2,12 +2,15 @@
 This module defines the `Price` entity model.
 """
 
+from datetime import date, datetime
+
+
 class Price:
     """
     `Price` entity model.
     """
 
-    def __init__(self, id: int = None, price: float = None, checkpoint: int = None):
+    def __init__(self, id: int = None, price: float = None, checkpoint: datetime = None):
         """
         Initializer of `Price` entity model.
 
@@ -59,7 +62,7 @@ class Price:
         return self.__price
     
     @property
-    def checkpoint(self) -> int:
+    def checkpoint(self) -> datetime:
         """
         Checkpoint of the current price.
         """
@@ -83,7 +86,7 @@ class Price:
         self.__price = price
     
     @checkpoint.setter
-    def checkpoint(self, checkpoint: int) -> None:
+    def checkpoint(self, checkpoint: datetime) -> None:
         """
         Set the checkpoint of the current price.
         """

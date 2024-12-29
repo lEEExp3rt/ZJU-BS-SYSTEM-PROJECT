@@ -6,9 +6,9 @@ from backend.services.Spider import Spider
 from backend.models.Product import Product
 from backend.models.Price import Price
 from backend.utils.Platforms import Platform
-import time
 import re
 import mmh3
+from datetime import datetime
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -49,7 +49,7 @@ class Dangdang(Spider):
             price_format = re.compile(r"\d+\.\d{2}")
             result = []
             wait = WebDriverWait(self.driver, self.wait_time)
-            checkpoint = int(time.time())
+            checkpoint = datetime.now()
             for page in range(pages):
                 self.driver.find_element(By.TAG_NAME, "body").send_keys(Keys.END)
                 wait.until(EC.presence_of_all_elements_located((By.TAG_NAME, "li")))

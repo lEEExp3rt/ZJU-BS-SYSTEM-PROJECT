@@ -9,7 +9,7 @@ drop table if exists `users`;
 create table `users` (
     `user_id` int not null auto_increment,
     `user_name` varchar(63) unique not null,
-    `password` varchar(63) not null,
+    `password` varchar(127) not null,
     `email` varchar(255) unique not null,
     `create_time` timestamp not null,
     primary key (`user_id`)

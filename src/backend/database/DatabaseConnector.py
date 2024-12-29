@@ -34,10 +34,6 @@ class DatabaseConnector:
         self.__config = config
         self.__conn: pymysql.Connection = None
 
-    def __del__(self):
-
-        self.close()
-
     @property
     def conn(self) -> pymysql.Connection:
         """

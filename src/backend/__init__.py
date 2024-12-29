@@ -21,7 +21,8 @@ def create_app() -> Flask:
     app = Flask(
         import_name="BudgetBEE",
         instance_path=os.path.abspath(config.instance_path),
-        template_folder=os.path.abspath("src/backend/templates")
+        template_folder=os.path.abspath("src/backend/templates"),
+        static_folder=os.path.abspath("src/backend/static")
     )
 
     app.config.from_mapping(
