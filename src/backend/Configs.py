@@ -18,24 +18,24 @@ class Config:
         Open the configuration file and load the application configuration.
         """
 
-        self.__host: str = None
-        self.__port: int = None
-        self.__user: str = None
-        self.__password: str = None
-        self.__database: str = None
-        self.__charset: str = None
-        self.__instance_path: str = None
+        self.__db_host: str = None
+        self.__db_port: int = None
+        self.__db_user: str = None
+        self.__db_password: str = None
+        self.__db_database: str = None
+        self.__db_charset: str = None
+        self.__app_instance_path: str = None
 
         try:
             with open(config_file, "r", encoding="utf-8") as f:
                 config = yaml.safe_load(f)
-                self.__host = config['Database']['host']
-                self.__port = config['Database']['port']
-                self.__user = config['Database']['user']
-                self.__password = config['Database']['password']
-                self.__database = config['Database']['database']
-                self.__charset = config['Database']['charset']
-                self.__instance_path = config['Build']['instance_path']
+                self.__db_host = config['Database']['host']
+                self.__db_port = config['Database']['port']
+                self.__db_user = config['Database']['user']
+                self.__db_password = config['Database']['password']
+                self.__db_database = config['Database']['database']
+                self.__db_charset = config['Database']['charset']
+                self.__app_instance_path = config['Build']['instance_path']
         except FileNotFoundError:
             raise FileNotFoundError("Application configuration file not found.")
         except yaml.YAMLError:
@@ -47,7 +47,7 @@ class Config:
         Get the host to connect to the database.
         """
 
-        return self.__host
+        return self.__db_host
 
     @property
     def DB_PORT(self) -> int:
@@ -55,7 +55,7 @@ class Config:
         Get the port to connect to the database.
         """
 
-        return self.__port
+        return self.__db_port
 
     @property
     def DB_USER(self) -> str:
@@ -63,7 +63,7 @@ class Config:
         Get the user to connect to the database.
         """
 
-        return self.__user
+        return self.__db_user
 
     @property
     def DB_PASSWORD(self) -> str:
@@ -71,7 +71,7 @@ class Config:
         Get the password to connect to the database.
         """
 
-        return self.__password
+        return self.__db_password
 
     @property
     def DB_DATABASE(self) -> str:
@@ -79,7 +79,7 @@ class Config:
         Get the name of the database to connect to.
         """
 
-        return self.__database
+        return self.__db_database
 
     @property
     def DB_CHARSET(self) -> str:
@@ -87,7 +87,7 @@ class Config:
         Get the charset of the database.
         """
 
-        return self.__charset
+        return self.__db_charset
 
     @property
     def instance_path(self) -> str:
@@ -95,4 +95,4 @@ class Config:
         Get the path to the instance directory.
         """
 
-        return self.__instance_path
+        return self.__app_instance_path

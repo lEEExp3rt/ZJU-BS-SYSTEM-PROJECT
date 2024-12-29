@@ -104,3 +104,21 @@ def close_conn(e=None) -> None:
     db = g.pop('db', None)
     if db is not None:
         db.close()
+
+
+""" New Version """
+
+class databaseconnector():
+    """
+    Database connector.
+
+    Use this class to establish a connection to the database and do operations on the database.
+    """
+
+    def __init__(self):
+
+        self.__conn: pymysql.Connection = None
+
+
+
+# db = databaseconnector()

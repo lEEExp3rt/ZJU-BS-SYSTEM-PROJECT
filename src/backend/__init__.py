@@ -34,7 +34,7 @@ def create_app() -> Flask:
     from .utils import AppInitializer
     AppInitializer.init_app(app)
 
-    # Register the blueprints
+    # Register the blueprints.
     from .views import authentication
     app.register_blueprint(authentication.auth)
 
