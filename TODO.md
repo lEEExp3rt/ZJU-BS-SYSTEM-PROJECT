@@ -4,4 +4,4 @@
 - [ ] 添加数据库执行和提交的封装
 - [ ] 爬虫能不能优化
 - [ ] 不采用Flask的`current_app`和`g`等设计，而是独立封装为类，保持向下兼容
-- [ ] 更改`requirements.txt`为`pyproject.toml`
+- [x] 更改`requirements.txt`为`pyproject.toml`

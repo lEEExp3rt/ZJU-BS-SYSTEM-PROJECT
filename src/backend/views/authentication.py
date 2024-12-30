@@ -7,8 +7,9 @@ The authentication process includes:
 """
 
 from backend.database.DatabaseConnector import get_conn
+from backend.utils.EmailManager import validate_email
+from backend.utils.EmailManager import email_manager
 import functools
-import email
 from pymysql import IntegrityError
 from flask import Blueprint, flash, g, redirect, render_template, request, session, url_for
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -31,11 +32,13 @@ def register():
 
         # Check registration information.
         if not username:
-            flash("Username is required.")
+            flash("Username is required!")
         elif not password:
-            flash("Password is required.")
+            flash("Password is required!")
         elif not email:
-            flash("Email is required.")
+            flash("Email is required!")
+        elif not validate_email(email):
+            flash("Invalid email format!")
         else:
             conn = get_conn()
             with conn.cursor() as cursor:

@@ -6,12 +6,12 @@ import os
 import yaml
 
 
-config_file = os.path.join(os.path.dirname(__file__), os.pardir, "configs", "Application.yml")
-
 class Config:
     """
     The configuration of the application.
     """
+
+    config_file = os.path.join(os.path.dirname(__file__), os.pardir, "configs", "Application.yml")
 
     def __init__(self, config_file: str = config_file):
         """
@@ -25,6 +25,11 @@ class Config:
         self.__db_database: str = None
         self.__db_charset: str = None
         self.__app_instance_path: str = None
+        self.__email_smtp: str = None
+        self.__emial_port: int = None
+        self.__email_sendername: str = None
+        self.__email_senderemail: str = None
+        self.__email_senderpassword: str = None
 
         try:
             with open(config_file, "r", encoding="utf-8") as f:
@@ -36,6 +41,11 @@ class Config:
                 self.__db_database = config['Database']['database']
                 self.__db_charset = config['Database']['charset']
                 self.__app_instance_path = config['Build']['instance_path']
+                self.__email_smtp = config['Email']['smtp']
+                self.__emial_port = config['Email']['port']
+                self.__email_sendername = config['Email']['sendername']
+                self.__email_senderemail = config['Email']['senderemail']
+                self.__email_senderpassword = config['Email']['senderpassword']
         except FileNotFoundError:
             raise FileNotFoundError("Application configuration file not found.")
         except yaml.YAMLError:
@@ -96,3 +106,47 @@ class Config:
         """
 
         return self.__app_instance_path
+    
+    @property
+    def email_smtp(self) -> str:
+        """
+        Get the SMTP server address.
+        """
+
+        return self.__email_smtp
+
+    @property
+    def email_port(self) -> int:
+        """
+        Get the SMTP server port.
+        """
+
+        return self.__emial_port
+
+    @property
+    def email_sendername(self) -> str:
+        """
+        Get the sender's name.
+        """
+
+        return self.__email_sendername
+
+    @property
+    def email_senderemail(self) -> str:
+        """
+        Get the sender's email address.
+        """
+
+        return self.__email_senderemail
+
+    @property
+    def email_senderpassword(self) -> str:
+        """
+        Get the sender's password.
+        """
+
+        return self.__email_senderpassword
+
+
+""" Global instance of the Config class. """
+configs = Config()
