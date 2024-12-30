@@ -3,18 +3,16 @@ This module is used to initialize the database.
 """
 
 import os
+
 import pymysql
-import click
-from flask import current_app
+from backend.database.DatabaseConnector import db
 
 
 db_initializer = os.path.join(os.path.dirname(__file__), os.pardir, os.pardir, 'configs', 'DBInitializer.sql')
 
 def init_db():
     """
-    Initialize the database.
-
-    Remember to call this function when first using the database, or any time you want to reset the database.
+    Initialize the database and clear all the existing data.
     """
 
     try:
@@ -22,34 +20,16 @@ def init_db():
             script = f.read()
 
             # Connect to the database.
-            conn = pymysql.connect(
-                host=current_app.config['DB_HOST'],
-                password=current_app.config['DB_PASSWORD'],
-                user=current_app.config['DB_USER'],
-            )
+            if not db.is_connected:
+                db.connect(database='')
 
             # Execute the SQL script.
-            with conn.cursor() as cursor:
-                sqls = script.split(';')
-                for sql in sqls:
-                    if sql.strip():
-                        cursor.execute(sql)
-                conn.commit()
+            sqls = script.split(';')
+            for sql in sqls:
+                if sql.strip():
+                    db.execute(sql)
 
     except FileNotFoundError:
-        conn.rollback()
         raise FileNotFoundError(f"Database initializer script {db_initializer} not found.")
     except pymysql.MySQLError as e:
-        conn.rollback()
         raise e
-    finally:
-        conn.close()
-
-@click.command('init-db')
-def init_db_command():
-    """
-    Initialize the database in CLI.
-    """
-
-    init_db()
-    click.echo('Database initialized.')

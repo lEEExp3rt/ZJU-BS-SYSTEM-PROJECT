@@ -11,4 +11,13 @@ Database:
 
 # Build Configuration.
 Build:
+  name: "Budget Bee"
   instance_path: "bin"
+
+# Email Configuration.
+Email:
+  smtp: "smtp.163.com"
+  port: 465
+  sendername: "Budget Bee Administrator"
+  senderemail: "Budg3tB33@163.com"
+  senderpassword: "GYbbMZS3vh2iFEpA"

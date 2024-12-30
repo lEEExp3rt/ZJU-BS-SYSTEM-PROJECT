@@ -24,6 +24,7 @@ class Config:
         self.__db_password: str = None
         self.__db_database: str = None
         self.__db_charset: str = None
+        self.__app_name: str = None
         self.__app_instance_path: str = None
         self.__email_smtp: str = None
         self.__emial_port: int = None
@@ -40,6 +41,7 @@ class Config:
                 self.__db_password = config['Database']['password']
                 self.__db_database = config['Database']['database']
                 self.__db_charset = config['Database']['charset']
+                self.__app_name = config['Build']['name']
                 self.__app_instance_path = config['Build']['instance_path']
                 self.__email_smtp = config['Email']['smtp']
                 self.__emial_port = config['Email']['port']
@@ -98,6 +100,14 @@ class Config:
         """
 
         return self.__db_charset
+    
+    @property
+    def app_name(self) -> str:
+        """
+        Get the name of the application.
+        """
+
+        return self.__app_name
 
     @property
     def instance_path(self) -> str:
