@@ -79,6 +79,7 @@ class EmailManager:
             raise e
 
 """ Global email manager instance. """
+'''
 from backend.Configs import configs
 email_manager = EmailManager(
     sender_email=configs.email_senderemail,
@@ -87,3 +88,4 @@ email_manager = EmailManager(
     smtp_server=configs.email_smtp,
     smtp_port=configs.email_port
 )
+'''

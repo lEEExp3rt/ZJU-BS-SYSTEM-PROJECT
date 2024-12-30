@@ -110,104 +110,21 @@ def close_db(e=None) -> None:
     This function comes from Flask.
     """
 
+    from backend import db
+
     if db.is_connected:
         db.close()
 
 
 """ Global database connector instance """
-from backend.Configs import configs
-db = DatabaseConnector(
-    host=configs.DB_HOST,
-    port=configs.DB_PORT,
-    user=configs.DB_USER,
-    password=configs.DB_PASSWORD,
-    database=configs.DB_DATABASE,
-    charset=configs.DB_CHARSET
-)
-
+#from backend.Configs import configs
 '''
-class DatabaseConnector:
-    """
-    Database connector.
-
-    Use this class to establish a connection to the database and do operations on the database.
-    """
-
-    cursorType = pymysql.cursors.Cursor
-
-    def __init__(self, config):
-
-        self.__config = config
-        self.__conn: pymysql.Connection = None
-
-    @property
-    def conn(self) -> pymysql.Connection:
-        """
-        Get the connection to the database.
-        """
-
-        return self.__conn 
-
-    @property
-    def cursor(self) -> cursorType:
-        """
-        Get the cursor to the database.
-        """
-
-        return self.__conn.cursor() if self.__conn is not None else None
-
-    def connect(self) -> None:
-        """
-        Connect to the database.
-
-        :param use_db: Whether to use the database specified in the configuration.
-        """
-
-        if self.__conn is None:
-            self.__conn = pymysql.connect(
-                host=self.__config['DB_HOST'],
-                user=self.__config['DB_USER'],
-                password=self.__config['DB_PASSWORD'],
-                database=self.__config['DB_DATABASE'],
-                port=self.__config['DB_PORT'],
-                charset=self.__config['DB_CHARSET'],
-                cursorclass=self.cursorType
-            )
-
-    def close(self) -> None:
-        """
-        Close the connection to the database.
-        """
-
-        if self.__conn is not None:
-            self.__conn.close()
-            self.__conn = None
-
-
-def get_conn() -> pymysql.Connection:
-    """
-    Get one database connection.
-
-    If the database connection is not established, establish a new connection, otherwise return the existing connection.
-
-    :return: The database connection.
-    """
-
-    if 'db' not in g:
-        db = DatabaseConnector(current_app.config)
-        db.connect()
-        g.db = db.conn
-
-    return g.db
-
-def close_conn(e=None) -> None:
-    """
-    Close the database connection.
-
-    This function comes from Flask.
-    """
-
-    db = g.pop('db', None)
-    if db is not None:
-        db.close()
+db = DatabaseConnector(
+    host=configs.db_host,
+    port=configs.db_port,
+    user=configs.db_user,
+    password=configs.db_password,
+    database=configs.db_database,
+    charset=configs.db_charset
+)
 '''

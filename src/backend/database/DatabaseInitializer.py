@@ -2,10 +2,10 @@
 This module is used to initialize the database.
 """
 
-import os
+from backend import db
 
+import os
 import pymysql
-from backend.database.DatabaseConnector import db
 
 
 db_initializer = os.path.join(os.path.dirname(__file__), os.pardir, os.pardir, 'configs', 'DBInitializer.sql')

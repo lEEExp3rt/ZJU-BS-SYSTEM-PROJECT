@@ -1,45 +1,30 @@
 """
-This file builds the Flask app instance and sets up the configuration.
+This file initializes the backend package and build global instances.
 """
 
-from . import Configs
-from flask import Flask
-import os
+from backend.Configs import Config
+from backend.database.DatabaseConnector import DatabaseConnector
+from backend.utils.EmailManager import EmailManager
 
 
-def create_app() -> Flask:
-    """
-    Get the whole app instance.
+''' Global Configuration Instance '''
+configs = Config()
 
-    :return: The Flask app instance.
-    """
+''' Global Database Connector Instance '''
+db = DatabaseConnector(
+    host=configs.db_host,
+    port=configs.db_port,
+    user=configs.db_user,
+    password=configs.db_password,
+    database=configs.db_database,
+    charset=configs.db_charset
+)
 
-    # Load the configuration.
-    config = Configs.Config()
-
-    # Create the Flask app instance
-    app = Flask(
-        import_name="BudgetBEE",
-        instance_path=os.path.abspath(config.instance_path),
-        template_folder=os.path.abspath("src/backend/templates"),
-        static_folder=os.path.abspath("src/backend/static")
-    )
-
-    app.config.from_mapping(
-        SECRET_KEY='dev'
-    )
-    app.config.from_object(config)
-
-    # Initialize the app.
-    from .utils import AppInitializer
-    AppInitializer.init_app(app)
-
-    # Register the blueprints.
-    from .views import authentication
-    app.register_blueprint(authentication.auth)
-
-    @app.route('/')
-    def index():
-        return "Hello, World!"
-
-    return app
+''' Global Email Manager Instance '''
+email_manager = EmailManager(
+    sender_email=configs.email_senderemail,
+    sender_name=configs.email_sendername,
+    sender_password=configs.email_senderpassword,
+    smtp_server=configs.email_smtp,
+    smtp_port=configs.email_port
+)

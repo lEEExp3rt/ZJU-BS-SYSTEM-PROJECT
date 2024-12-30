@@ -4,9 +4,8 @@ This module defines the Budget Bee Application class.
 This is a wrapper class.
 """
 
-from backend.Configs import configs
-from backend.database.DatabaseConnector import db, close_db
-from backend.utils.EmailManager import email_manager
+from backend import configs, db, email_manager
+from backend.database.DatabaseConnector import close_db
 from backend.database.DatabaseInitializer import init_db
 
 import os

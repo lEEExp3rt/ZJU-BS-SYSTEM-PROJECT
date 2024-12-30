@@ -54,7 +54,7 @@ class Config:
             raise yaml.YAMLError("Error while loading application configuration file.")
 
     @property
-    def DB_HOST(self) -> str:
+    def db_host(self) -> str:
         """
         Get the host to connect to the database.
         """
@@ -62,7 +62,7 @@ class Config:
         return self.__db_host
 
     @property
-    def DB_PORT(self) -> int:
+    def db_port(self) -> int:
         """
         Get the port to connect to the database.
         """
@@ -70,7 +70,7 @@ class Config:
         return self.__db_port
 
     @property
-    def DB_USER(self) -> str:
+    def db_user(self) -> str:
         """
         Get the user to connect to the database.
         """
@@ -78,7 +78,7 @@ class Config:
         return self.__db_user
 
     @property
-    def DB_PASSWORD(self) -> str:
+    def db_password(self) -> str:
         """
         Get the password to connect to the database.
         """
@@ -86,7 +86,7 @@ class Config:
         return self.__db_password
 
     @property
-    def DB_DATABASE(self) -> str:
+    def db_database(self) -> str:
         """
         Get the name of the database to connect to.
         """
@@ -94,7 +94,7 @@ class Config:
         return self.__db_database
 
     @property
-    def DB_CHARSET(self) -> str:
+    def db_charset(self) -> str:
         """
         Get the charset of the database.
         """
@@ -159,4 +159,4 @@ class Config:
 
 
 """ Global instance of the Config class. """
-configs = Config()
+#configs = Config()

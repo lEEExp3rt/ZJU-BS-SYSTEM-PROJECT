@@ -1,5 +1,8 @@
 """
 This module is used to initialize the Flask app.
+
+:DeprecationWarning:
+    This module is deprecated and will be removed in the future.
 """
 
 from backend.database.DatabaseInitializer import init_db_command
