@@ -38,8 +38,10 @@ class APP:
         self.__app.teardown_appcontext(close_db)
 
         # Register the blueprints.
-        from .views import authentication
+        from .views import index, authentication, home
+        self.__app.register_blueprint(index.index_bp)
         self.__app.register_blueprint(authentication.auth)
+        self.__app.register_blueprint(home.home_bp)
     
     def init_app(self):
         """

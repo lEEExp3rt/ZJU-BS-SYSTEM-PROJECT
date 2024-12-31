@@ -1,16 +1,31 @@
-<!-- This file is used to login the user -->
 {% extends 'base.html' %}
 
-{% block header %}
-  <h1>{% block title %}Log In{% endblock %}</h1>
-{% endblock %}
+{% block title %}Login - {% endblock %}
 
 {% block content %}
-  <form method="post">
-    <label for="username">Username</label>
-    <input name="username" id="username" required>
-    <label for="password">Password</label>
-    <input type="password" name="password" id="password" required>
-    <input type="submit" value="Log In">
-  </form>
+  <div class="container mt-5" style="margin-top: auto; margin-bottom: auto; margin-left: auto; margin-right: auto;">
+    
+    <h1 class="text-center">登录到 Budget Bee</h1>
+    
+    <form method="POST" action="/login" class="mt-4" class="mt-4" style="width: 30%; margin-top:auto; margin-bottom: auto; margin-left:auto; margin-right: auto;">
+      <div class="mb-3">
+        <label for="username" class="form-label">用户名</label>
+        <input type="username" class="form-control" id="username" name="username" required>
+      </div>
+      
+      <div class="mb-3">
+        <label for="password" class="form-label">密码</label>
+        <input type="password" class="form-control" id="password" name="password" required>
+      </div>
+      
+      <div class="d-grid gap-2">
+        </br>
+        <button type="submit" class="btn btn-primary btn-lg">登录</button>
+      </div>
+    </form>
+    
+    <div class="text-center mt-3">
+      <p>还没有账户？立即<a href="/register">注册</a></p>
+    </div>
+  </div>
 {% endblock %}

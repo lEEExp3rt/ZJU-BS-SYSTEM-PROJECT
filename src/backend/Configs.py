@@ -156,7 +156,3 @@ class Config:
         """
 
         return self.__email_senderpassword
-
-
-""" Global instance of the Config class. """
-#configs = Config()

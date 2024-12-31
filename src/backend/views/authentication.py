@@ -6,15 +6,17 @@ The authentication process includes:
 - Register
 """
 
-from backend import db
-from backend.utils.EmailManager import validate_email
+from backend import db, email_manager
+from backend.utils.EmailManager import validate_email, generate_verification_code
 import functools
 from pymysql import IntegrityError
-from flask import Blueprint, flash, g, redirect, render_template, request, session, url_for
+from flask import Blueprint, flash, g, jsonify, redirect, render_template, request, session, url_for
 from werkzeug.security import check_password_hash, generate_password_hash
 
 
 auth = Blueprint('authentication', __name__, url_prefix='/')
+
+codes = None
 
 @auth.route('/register', methods=('GET', 'POST'))
 def register():
@@ -28,6 +30,7 @@ def register():
         username = request.form['username']
         password = request.form['password']
         email    = request.form['email']
+        code     = request.form['verification_code']
 
         # Check registration information.
         if not username:
@@ -38,22 +41,51 @@ def register():
             flash("Email is required!")
         elif not validate_email(email):
             flash("Invalid email format!")
+        elif not code:
+            flash("Verification code is required!")
         else:
             db.connect()
-            try:
-                db.execute(
-                    "insert into `users` (`user_name`, `password`, `email`, `create_time`) values (%s, %s, %s, now())",
-                    (username, generate_password_hash(password=password, method='pbkdf2:sha256:10000', salt_length=8), email,)
-                )
-            except IntegrityError:
-                flash(f"Username {username} already exists.")
-            else:
-                flash("Registration successful.")
-                return redirect(url_for('authentication.login'))
-            finally:
+            results = db.execute("select * from `users` where `email` = %s", (email,))
+            if len(results) > 0:
+                flash("Email already registered.")
                 db.close()
+            else:
+                if codes is None:
+                    flash("Verification code is empty!")
+                elif code != codes:
+                    flash("Verification code is incorrect!")
+                else:
+                    try:
+                        db.execute(
+                            "insert into `users` (`user_name`, `password`, `email`, `create_time`) values (%s, %s, %s, now())",
+                            (username, generate_password_hash(password=password, method='pbkdf2:sha256:10000', salt_length=8), email,)
+                        )
+                    except IntegrityError:
+                        flash(f"Username {username} already exists.")
+                    else:
+                        flash("Registration successful.")
+                        return redirect(url_for('authentication.login'))
+                    finally:
+                        db.close()
 
     return render_template('authentication/register.html')
+
+@auth.route('/register/generate_verification_code', methods=['POST'])
+def send_verification_code():
+    """
+    Send a verification code to the user's email.
+    """
+
+    data = request.get_json()
+    global codes
+    codes = generate_verification_code()
+    email_manager.send(
+        receiver_email=data.get('email'),
+        content=f"Your verification code is: {codes}.",
+        receiver_name=data.get('username'),
+        subject="Budget Bee Registration Verification Code"
+    )
+    return jsonify({'success': True})
 
 @auth.route('/login', methods=('GET', 'POST'))
 def login():
@@ -89,7 +121,7 @@ def login():
                 session['email'] = result[3]
                 session['create_time'] = result[4]
                 flash(f"User {username} login successful.")
-                return redirect(url_for('index'))
+                return redirect(url_for('home.home'))
 
     return render_template('authentication/login.html')
 
@@ -101,7 +133,7 @@ def logout():
 
     session.clear()
     flash("Logout successful.")
-    return redirect(url_for('index'))
+    return redirect(url_for('index.index'))
 
 @auth.before_app_request
 def load_logged_in_user():
@@ -121,12 +153,14 @@ def load_logged_in_user():
             "select * from `users` where `user_id` = %s",
             (user_id,)
         )
-        g.user = results[0][0] if len(results) > 0 else None
+        g.user = results[0] if len(results) > 0 else None
         db.close()
 
 def login_required(view):
     """
     Decorator for views that require login.
+
+    If not logged in, redirect to the login page.
     """
 
     @functools.wraps(view)

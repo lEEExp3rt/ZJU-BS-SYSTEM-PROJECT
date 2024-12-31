@@ -1,25 +1,53 @@
 <!-- This file is used as the base template for all other HTML pages -->
 <!DOCTYPE html>
-<title>{% block title %}{% endblock %} - Budget Bee</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-<nav>
-  <h1>Budget Bee</h1>
-  <ul>
-    {% if g.user %}
-      <li><span>{{ g.user['user_name'] }}</span>
-      <li><a href="{{ url_for('authentication.logout') }}">Log Out</a>
-    {% else %}
-      <li><a href="{{ url_for('authentication.register') }}">Register</a>
-      <li><a href="{{ url_for('authentication.login') }}">Log In</a>
-    {% endif %}
-  </ul>
-</nav>
-<section class="content">
-  <header>
-    {% block header %}{% endblock %}
-  </header>
-  {% for message in get_flashed_messages() %}
-    <div class="flash">{{ message }}</div>
-  {% endfor %}
-  {% block content %}{% endblock %}
-</section>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block title %}{% endblock %}Budget Bee</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}" crossorigin="anonymous">
+
+    <!--
+    <nav>
+      <h1>Budget Bee</h1>
+      <ul>
+        {% if g.user %}
+          <li><span>{{ g.user['user_name'] }}</span>
+          <li><a href="{{ url_for('authentication.logout') }}">Log Out</a>
+        {% else %}
+          <li><a href="{{ url_for('authentication.register') }}">Register</a>
+          <li><a href="{{ url_for('authentication.login') }}">Log In</a>
+        {% endif %}
+      </ul>
+    </nav>
+  -->
+    {% block style %}
+    {% endblock %}
+
+  </head>
+  <body>
+    <header>
+      {% block header %}{% endblock %}
+    </header>
+
+    {% for message in get_flashed_messages() %}
+      <!--
+      <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    -->
+      <div class="alert alert-primary" role="alert">{{ message }}</div>
+    {% endfor %}
+
+    {% block content %}
+    {% endblock %}
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}" crossorigin=anonymous></script>
+
+    {% block script %}
+    {% endblock %}
+  </body>
+</html>

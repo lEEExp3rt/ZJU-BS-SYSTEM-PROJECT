@@ -51,30 +51,31 @@ class DatabaseConnector():
         """
         Connect to the database.
 
-        Please make sure that the database is not connected before calling this function.
-
         If the parameters are not provided, use the parameters loaded from the configuration.
         """
 
-        self.__conn = pymysql.connect(
-            host=self.__host if host is None else host,
-            user=self.__user if user is None else user,
-            password=self.__password if password is None else password,
-            database=self.__database if database is None else database,
-            port=self.__port if port is None else port,
-            charset=self.__charset if charset is None else charset,
-            autocommit=False
-        )
+        if not self.is_connected:
+            self.__conn = pymysql.connect(
+                host=self.__host if host is None else host,
+                user=self.__user if user is None else user,
+                password=self.__password if password is None else password,
+                database=self.__database if database is None else database,
+                port=self.__port if port is None else port,
+                charset=self.__charset if charset is None else charset,
+                autocommit=False
+            )
 
     def close(self) -> None:
         """
         Close the connection to the database.
-
-        Please make sure that the database is connected before calling this function.
         """
 
-        self.__conn.close()
-        self.__conn = None
+        if self.is_connected:
+            try:
+                self.__conn.close()
+                self.__conn = None
+            except pymysql.err.Error:
+                pass
     
     def execute(self, sql: str, params: tuple = None):
         """
@@ -111,20 +112,4 @@ def close_db(e=None) -> None:
     """
 
     from backend import db
-
-    if db.is_connected:
-        db.close()
-
-
-""" Global database connector instance """
-#from backend.Configs import configs
-'''
-db = DatabaseConnector(
-    host=configs.db_host,
-    port=configs.db_port,
-    user=configs.db_user,
-    password=configs.db_password,
-    database=configs.db_database,
-    charset=configs.db_charset
-)
-'''
+    db.close()

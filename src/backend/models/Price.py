@@ -45,6 +45,17 @@ class Price:
         
         return self.__id == other.__id and self.__price == other.__price and self.__checkpoint == other.__checkpoint
     
+    def to_dict(self) -> dict:
+        """
+        Convert the `Price` entity model to a dictionary.
+
+        :return: a dictionary representation of the `Price` entity model.
+        """
+
+        return {
+            "price": self.__price,
+        }
+    
     @property
     def id(self) -> int:
         """

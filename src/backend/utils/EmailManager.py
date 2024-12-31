@@ -34,7 +34,7 @@ class EmailManager:
     """
     The email manager class to handle sending emails.
     """
-    
+
     def __init__(self, sender_email: str, sender_name: str, sender_password: str, smtp_server: str, smtp_port: int = 465):
 
         self.__smtp_server = smtp_server
@@ -77,15 +77,3 @@ class EmailManager:
             smtp_obj.quit() # Quit the SMTP server.
         except smtplib.SMTPException as e:
             raise e
-
-""" Global email manager instance. """
-'''
-from backend.Configs import configs
-email_manager = EmailManager(
-    sender_email=configs.email_senderemail,
-    sender_name=configs.email_sendername,
-    sender_password=configs.email_senderpassword,
-    smtp_server=configs.email_smtp,
-    smtp_port=configs.email_port
-)
-'''

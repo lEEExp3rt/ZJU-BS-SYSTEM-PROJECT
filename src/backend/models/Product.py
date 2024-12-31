@@ -48,7 +48,7 @@ class Product:
         self.__shop = shop
         self.__checkpoint = checkpoint
         self.__platform = platform
-
+    
     def __str__(self):
         """
         String representation of `Product` entity model.
@@ -92,6 +92,22 @@ class Product:
             self.__checkpoint == other.__checkpoint and
             self.__platform == other.__platform
         )
+
+    def to_dict(self) -> dict:
+        """
+        Convert `Product` entity model to dictionary for display.
+
+        :return: dictionary representation of `Product` entity model.
+        """
+
+        return {
+            'name': self.__name,
+            'description': self.__description if self.__description else '',
+            'url': self.__url,
+            'image': self.__image,
+            'shop': self.__shop,
+            'platform': self.__platform.value
+        }
 
     @property
     def id(self) -> int:
