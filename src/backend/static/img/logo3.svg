@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 250" width="175" height="100">
+  <!-- 定义渐变色 -->
+  <defs>
+    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF5733" stop-opacity="1"/> <!-- 鲜艳的红色 -->
+      <stop offset="100%" stop-color="#FFDA1A" stop-opacity="1"/> <!-- 明亮的黄色 -->
+    </linearGradient>
+
+    <!-- 定义文字动画 -->
+    <style>
+      .logo-text {
+        font-family: 'Brush Script MT', cursive;
+        font-size: 180px;  /* 更大字号 */
+        fill: url(#gradient); /* 使用渐变填充 */
+        stroke: #fff; /* 白色边框 */
+        stroke-width: 4px;  /* 增加边框宽度 */
+        filter: drop-shadow(4px 4px 10px rgba(0, 0, 0, 0.8)); /* 阴影效果增强 */
+        animation: textAnimation 3s ease-in-out infinite, glow 1.5s alternate infinite;
+      }
+
+      /* 文字动画：闪烁 */
+      @keyframes textAnimation {
+        0% {
+          opacity: 0;
+        }
+        50% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0;
+        }
+      }
+
+      /* 背景渐变闪烁效果 */
+      @keyframes glow {
+        0% {
+          fill: #FF5733; /* 鲜艳红色 */
+        }
+        50% {
+          fill: #FFDA1A; /* 明亮黄色 */
+        }
+        100% {
+          fill: #FF5733; /* 鲜艳红色 */
+        }
+      }
+    </style>
+  </defs>
+
+  <!-- 绘制文本 "Budget Bee" -->
+  <text x="50%" y="50%" text-anchor="middle" dy=".35em" class="logo-text">
+    Budget Bee
+  </text>
+</svg>

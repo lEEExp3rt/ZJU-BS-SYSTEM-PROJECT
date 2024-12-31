@@ -82,6 +82,7 @@
       left: 50%;
       transform: translateX(-50%);
       width: 55%;
+      height: 10%;
       max-width: 70%;
       z-index: 1000;
       display: flex;
@@ -89,13 +90,14 @@
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
       transition: top 0.3s ease;
       padding: 10px 0;
+      border-radius: 0.25rem;
       background-color: white;
     }
 
     .search-bar form {
       display: flex;
       max-width: 800px; /* 最大宽度 */
-      width: 100%; /* 自适应宽度 */
+      width: 70%; /* 自适应宽度 */
       gap: 10px; /* 输入框和按钮之间的间距 */
       justify-content: space-between;
     }
@@ -114,13 +116,16 @@
       margin-left: auto;
       margin-right: auto;
       border-radius: 0.25rem;
-      padding: 12px 20px;
+      width: 50%;
+      height: auto;
+      max-width: 80px;
+      padding: 10px 5px;
       background-color: #007bff;
       color: white;
       font-size: 1.1rem;
       border: none;
-      margin-left: 10px;
       cursor: pointer;
+      text-align: center;
     }
 
     .search-bar button:hover {
@@ -135,7 +140,8 @@
       width: 100px; /* 设置下拉列表的宽度 */
       background-color: white;
       border: 1px solid #ccc;
-      margin-right: 1px;
+      margin-right: auto;
+      margin-left: auto;
 
       /* 取消默认的浏览器样式 */
       appearance: none;
@@ -276,7 +282,7 @@
     <div class="search-bar" id="search-bar">
       <form action="{{ url_for('home.search') }}" method="get" class="d-flex w-100">
             <!-- 电商平台选择下拉列表 -->
-            <select name="platform" class="form-control" style="max-width: 200px; margin-right: 10px;">
+            <select name="platform" class="form-control" style="max-width: 200px; margin-right: 15px;">
               <option value="suning">苏宁易购</option>
               <option value="dangdang">当当网</option>
             </select>
@@ -288,8 +294,10 @@
 
     <div class="row">
       <!-- 侧边栏 -->
-      <div class="col-md-3 sidebar">
-        <h1>Budget Bee</h1>
+      <div class="col-md-3 col-12 sidebar">
+        <object type="image/svg+xml" data="{{ url_for('static', filename='img/logo3.svg') }}" class="img-fluid" style="max-width: 300px; height: auto;">
+          <img src="{{ url_for('static', filename='img/logo.svg') }}" alt="站点Logo" />
+        </object>
         <ul class="list-unstyled">
           <li><a href="{{ url_for('home.home') }}" class="btn btn-link text-white">首页</a></li>
           {% if g.user %}

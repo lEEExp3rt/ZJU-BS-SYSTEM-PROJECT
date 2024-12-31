@@ -5,51 +5,40 @@ This module defines the base spider class.
 from backend.models.Product import Product
 from backend.models.Price import Price
 from backend.utils.Platforms import Platform
-from selenium import webdriver
-from abc import ABC, abstractmethod
+from backend.services import Dangdang, Suning
+from backend.utils.WebDriver import get_webdriver
 from typing import List, Tuple
 
-class Spider(ABC):
+class SpiderManager:
     """
-    Spider interface.
+    Spider manager to handle crawling data.
     """
 
-    wait_time = 2
-
-    def __init__(self, driver: webdriver.Chrome, platform: Platform):
+    def __init__(self, wait_time: int = 2):
         """
         Initializer.
 
-        :param driver: The webdriver to use.
-        :param platform: The platform to crawl.
+        :param wait_time: The waiting time for each crawler.
         """
 
-        self.__driver = driver
-        self.__platform = platform
+        self.__wait_time = wait_time
     
-    @abstractmethod
-    def crawl(self, keyword: str, pages: int) -> List[Tuple[Product, Price]]:
+    def crawl(self, platform: Platform, keyword: str, pages: int = 1) -> List[Tuple[Product, Price]]:
         """
         Crawl the site for the given keyword.
 
+        :param platform: The platform to crawl.
         :param keyword: The keyword to search for.
         :param pages: The number of pages to crawl.
         """
 
-        pass
+        results = []
+        match platform:
+            case Platform.DANGDANG:
+                results = Dangdang.crawl(get_webdriver(), keyword, self.__wait_time, pages)
+            case Platform.SUNING:
+                results = Suning.crawl(get_webdriver(), keyword, self.__wait_time, pages)
+            case _:
+                raise ValueError("Invalid platform.")
 
-    @property
-    def driver(self) -> webdriver.Chrome:
-        """
-        Get the webdriver.
-        """
-
-        return self.__driver
-
-    @property
-    def platform(self) -> Platform:
-        """
-        Get the platform.
-        """
-
-        return self.__platform
+        return results

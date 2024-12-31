@@ -5,6 +5,7 @@ This file initializes the backend package and build global instances.
 from backend.Configs import Config
 from backend.database.DatabaseConnector import DatabaseConnector
 from backend.utils.EmailManager import EmailManager
+from backend.services.Spider import SpiderManager
 
 
 ''' Global Configuration Instance '''
@@ -28,3 +29,6 @@ email_manager = EmailManager(
     smtp_server=configs.email_smtp,
     smtp_port=configs.email_port
 )
+
+''' Global Spider Manager Instance '''
+spiders = SpiderManager()

@@ -125,7 +125,24 @@ def login():
 
     return render_template('authentication/login.html')
 
+def login_required(view):
+    """
+    Decorator for views that require login.
+
+    If not logged in, redirect to the login page.
+    """
+
+    @functools.wraps(view)
+    def wrapped_view(**kwargs):
+        if g.user is None:
+            flash("Log in required!")
+            return redirect(url_for('authentication.login'))
+        return view(**kwargs)
+
+    return wrapped_view
+
 @auth.route('/logout')
+@login_required
 def logout():
     """
     The logout process.
@@ -155,18 +172,3 @@ def load_logged_in_user():
         )
         g.user = results[0] if len(results) > 0 else None
         db.close()
-
-def login_required(view):
-    """
-    Decorator for views that require login.
-
-    If not logged in, redirect to the login page.
-    """
-
-    @functools.wraps(view)
-    def wrapped_view(**kwargs):
-        if g.user is None:
-            return redirect(url_for('authentication.login'))
-        return view(**kwargs)
-
-    return wrapped_view
