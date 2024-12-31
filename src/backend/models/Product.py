@@ -4,6 +4,7 @@ This module defines the `Product` entity model.
 
 from backend.utils.Platforms import Platform
 from datetime import datetime
+from typing import Tuple, overload
 
 class Product:
     """
@@ -101,6 +102,7 @@ class Product:
         """
 
         return {
+            'id': self.__id,
             'name': self.__name,
             'description': self.__description if self.__description else '',
             'url': self.__url,
@@ -108,6 +110,25 @@ class Product:
             'shop': self.__shop,
             'platform': self.__platform.value
         }
+    
+    @property
+    def all(self) -> Tuple:
+        """
+        All attributes of `Product` entity model for database operations.
+        """
+
+        return (
+            self.__id,
+            self.__name,
+            self.__description,
+            self.__url,
+            self.__image,
+            self.__category,
+            self.__scale,
+            self.__shop,
+            self.__checkpoint,
+            self.__platform.name
+        )
 
     @property
     def id(self) -> int:

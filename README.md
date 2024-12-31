@@ -69,7 +69,16 @@
     │   │   │   ├── bootstrap.rtl.min.css.map
     │   │   │   └── style.css
     │   │   ├── img
-    │   │   │   └── logo.svg
+    │   │   │   ├── android-chrome-192x192.png
+    │   │   │   ├── android-chrome-512x512.png
+    │   │   │   ├── apple-touch-icon.png
+    │   │   │   ├── email.svg
+    │   │   │   ├── favicon-16x16.png
+    │   │   │   ├── favicon-32x32.png
+    │   │   │   ├── favicon.ico
+    │   │   │   ├── github.svg
+    │   │   │   ├── logo.svg
+    │   │   │   └── logo3.svg
     │   │   └── js
     │   │       ├── bootstrap.bundle.js
     │   │       ├── bootstrap.bundle.js.map
@@ -89,6 +98,7 @@
     │   │   │   └── register.html
     │   │   ├── base.html
     │   │   ├── home
+    │   │   │   ├── details.html
     │   │   │   ├── home.html
     │   │   │   └── search.html
     │   │   └── index.html

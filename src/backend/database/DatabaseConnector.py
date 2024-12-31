@@ -65,6 +65,7 @@ class DatabaseConnector():
                 charset=self.__charset if charset is None else charset,
                 autocommit=False
             )
+            self.__is_connected = True
 
     def close(self) -> None:
         """
@@ -73,6 +74,7 @@ class DatabaseConnector():
 
         if self.__is_connected:
             try:
+                self.__is_connected = False
                 self.__conn.close()
             except pymysql.err.Error:
                 pass

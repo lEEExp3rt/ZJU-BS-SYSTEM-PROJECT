@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}搜索结果 - Budget Bee{% endblock %}
+{% block title %}Search - {% endblock %}
 
 {% block style %}
   <style>
@@ -300,12 +300,8 @@
         </object>
         <ul class="list-unstyled">
           <li><a href="{{ url_for('home.home') }}" class="btn btn-link text-white">首页</a></li>
-          {% if g.user %}
-            <li><a href="{{ url_for('authentication.logout') }}" class="btn btn-link text-white">退出</a></li>
-          {% else %}
-            <li><a href="{{ url_for('authentication.login') }}" class="btn btn-link text-white">登录</a></li>
-            <li><a href="{{ url_for('authentication.register') }}" class="btn btn-link text-white">注册</a></li>
-          {% endif %}
+          <li><a href="favorites" class="btn btn-link text-white">收藏</a></li>
+          <li><a href="{{ url_for('authentication.logout') }}" class="btn btn-link text-white">退出</a></li>
         </ul>
       </div>
 
@@ -328,6 +324,11 @@
                 <p class="product-card-text">{{ product.description }}</p>
                 <p class="price">¥{{ product.price }}</p>
                 <p class="store-name">{{ product.shop }}</p>
+
+                <!-- 商品卡片中的查看详情按钮 -->
+                <button class="btn btn-info btn-sm">
+                  <a href="{{ url_for('home.product_details', product_id=product.id) }}" class="text-white">查看详情</a>
+                </button>
               </div>
             </div>
           {% else %}

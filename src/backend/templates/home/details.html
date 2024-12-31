@@ -1,0 +1,240 @@
+{% extends "base.html" %}
+
+{% block title %}Details - {% endblock %}
+
+{% block style %}
+  <style>
+    /* 商品详情页样式 */
+    .product-detail {
+      margin-left: 400px;
+      padding: 40px;
+      background-color: white;
+      border-radius: 15px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      max-width: 900px;
+      margin-right: auto;
+      margin-top: 40px;
+      margin-bottom: 40px;
+      position: relative;  /* 使返回按钮可以绝对定位 */
+    }
+
+    /* 商品图片样式 */
+    .product-detail img {
+      max-width: 100%;
+      border-radius: 15px;
+      margin-bottom: 20px;
+      align-self: center;  /* 使用flexbox居中图片 */
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* 商品名样式 */
+    .product-detail h2 {
+      margin-top: 50px;  /* 调整商品名称距离顶部的间距 */
+      margin-bottom: 20px;
+      font-size: 2.2rem;  /* 减小字体大小 */
+      color: #333;
+      font-weight: 600;
+    }
+
+    /* 文字描述 */
+    .product-detail p {
+      font-size: 1.2rem;
+      color: #555;
+      line-height: 1.6;
+      margin: 10px 0;
+    }
+
+    /* 强调文字样式 */
+    .product-detail strong {
+      color: #007bff;
+    }
+
+    /* 返回按钮样式 */
+    .btn-back {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      display: inline-block;
+      padding: 12px 30px;
+      font-size: 1.1rem;
+      font-weight: 500;
+      background: linear-gradient(135deg, #007bff, #0056b3);
+      color: white;
+      border-radius: 50px;
+      border: none;
+      text-align: center;
+      transition: background 0.3s ease;
+      text-decoration: none;
+    }
+
+    .btn-back:hover {
+      background: linear-gradient(135deg, #0056b3, #003f8f);
+    }
+
+    /* 图表容器 */
+    .chart-container {
+      margin-top: 40px;
+      padding: 30px;
+      background-color: #f8f9fa;
+      border-radius: 10px;
+      box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    canvas {
+      width: 100% !important;
+      height: 400px;
+      border-radius: 10px;
+    }
+
+    /* 侧边栏样式 */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: 200px;
+      height: 100%;
+      background-color: #343a40;
+      padding-top: 20px;
+      color: white;
+      box-shadow: 4px 0 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .sidebar img {
+      max-width: 200px;
+      margin: 0 auto;
+      display: block;
+      margin-bottom: 30px;
+    }
+
+    .sidebar ul {
+      padding-left: 0;
+      list-style: none;
+    }
+
+    .sidebar ul li {
+      margin: 15px 0;
+    }
+
+    .sidebar ul li a {
+      color: white;
+      font-size: 1.1rem;
+      padding: 10px;
+      text-decoration: none;
+      display: block;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+    }
+
+    .sidebar ul li a:hover {
+      background-color: #495057;
+    }
+
+    /* 响应式样式 */
+    @media (max-width: 768px) {
+      .product-detail {
+        margin-left: 20px;
+        margin-right: 20px;
+      }
+
+      .sidebar {
+        position: static;
+        width: 100%;
+        margin-bottom: 30px;
+        box-shadow: none;
+      }
+
+      .sidebar ul li a {
+        font-size: 1rem;
+      }
+    }
+  </style>
+{% endblock %}
+
+{% block content %}
+  <div class="container-fluid">
+    <div class="row">
+      <!-- 侧边栏 -->
+      <div class="col-md-3 col-12 sidebar">
+        <object type="image/svg+xml" data="{{ url_for('static', filename='img/logo3.svg') }}" class="img-fluid" style="max-width: 200px; height: auto;">
+          <img src="{{ url_for('static', filename='img/logo.svg') }}" alt="站点Logo" />
+        </object>
+        <ul class="list-unstyled">
+          <li><a href="{{ url_for('home.home') }}" class="btn btn-link text-white">首页</a></li>
+          <li><a href="favorites" class="btn btn-link text-white">收藏</a></li>
+          <li><a href="{{ url_for('authentication.logout') }}" class="btn btn-link text-white">退出</a></li>
+        </ul>
+      </div>
+
+      <!-- 主内容区 -->
+      <div class="col-md-9 col-12 product-detail">
+        <h2>{{ details.name }}</h2>
+        <img src="{{ details.image }}" alt="{{ details.name }}" class="img-fluid">
+        <p><strong>价格：</strong>¥{{ details.price }}</p>
+        <p><strong>商家：</strong>{{ details.shop }}</p>
+        <p><strong>描述：</strong>{{ details.description }}</p>
+
+        <!-- 返回按钮 -->
+        <a href="javascript:void(0);" class="btn-back" onclick="window.history.back()">返回搜索结果</a>
+
+        <!-- 显示价格走势图 -->
+        <div class="chart-container">
+          <canvas id="priceChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block script %}
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <script>
+    // 获取价格历史数据
+    const priceHistory = {{ details.priceHistory|tojson }};
+    
+    // 创建图表
+    const ctx = document.getElementById('priceChart').getContext('2d');
+    const chart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: priceHistory.map(item => item.checkpoint),  // 假设价格历史包含日期
+        datasets: [{
+          label: '价格历史',
+          data: priceHistory.map(item => item.price),  // 获取价格数据
+          borderColor: 'rgba(75, 192, 192, 1)',
+          fill: false,
+          pointRadius: 5,  // 控制数据点的大小
+          pointBackgroundColor: 'rgba(75, 192, 192, 1)'
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false, // 允许图表自适应容器大小
+        plugins: {
+          title: {
+            display: true,
+            text: '商品价格走势图'
+          }
+        },
+        scales: {
+          x: {
+            ticks: {
+              maxRotation: 0,  // 防止x轴标签旋转，确保标签可以水平显示
+              autoSkip: true    // 自动跳过一些x轴标签，避免重叠
+            }
+          },
+          y: {
+            min: Math.min(...priceHistory.map(item => item.price)) - 10,  // 设置y轴的最小值，确保图表的底部有一点间距
+            max: Math.max(...priceHistory.map(item => item.price)) + 10,  // 设置y轴的最大值，确保图表顶部有一点间距
+            ticks: {
+              beginAtZero: false  // 不强制从0开始
+            }
+          }
+        }
+      }
+    });
+  </script>
+{% endblock %}

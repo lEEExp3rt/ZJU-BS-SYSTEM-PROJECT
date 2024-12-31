@@ -2,7 +2,8 @@
 This module defines the `Price` entity model.
 """
 
-from datetime import date, datetime
+from datetime import datetime
+from typing import Tuple
 
 
 class Price:
@@ -55,6 +56,18 @@ class Price:
         return {
             "price": self.__price,
         }
+    
+    @property
+    def all(self) -> Tuple:
+        """
+        All attributes of the `Price` entity model for database operations.
+        """
+
+        return (
+            self.__id,
+            self.__price,
+            self.__checkpoint
+        )
     
     @property
     def id(self) -> int:

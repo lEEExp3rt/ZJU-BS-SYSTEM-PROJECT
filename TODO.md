@@ -5,3 +5,7 @@
 - [ ] 爬虫能不能优化
 - [x] 不采用Flask的`current_app`和`g`等设计，而是独立封装为类，保持向下兼容
 - [x] 更改`requirements.txt`为`pyproject.toml`
+- [ ] 更改包的名字为`app`
+- [ ] 删除没有用到的静态文件
+- [ ] 日志系统
+- [ ] 由`argparse`模块引入是否需要初始化数据库

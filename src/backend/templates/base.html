@@ -8,6 +8,10 @@
     <title>{% block title %}{% endblock %}Budget Bee</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}" crossorigin="anonymous">
 
+    <!-- 设置 favicon -->
+    <link rel="icon" href="{{ url_for('static', filename='img/favicon-16x16.png') }}" type="image/x-icon">
+
+
     {% block style %}
     {% endblock %}
 
