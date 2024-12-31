@@ -38,6 +38,7 @@ class DatabaseConnector():
         self.__database: str = database
         self.__charset: str = charset
         self.__conn: pymysql.Connection = None
+        self.__is_connected: bool = False
 
     @property
     def is_connected(self) -> bool:
@@ -45,7 +46,7 @@ class DatabaseConnector():
         If the database is connected.
         """
 
-        return self.__conn is not None
+        return self.__is_connected
 
     def connect(self, host: str = None, port: int = None, user: str = None, password: str = None, database: str = None, charset: str = None) -> None:
         """
@@ -54,7 +55,7 @@ class DatabaseConnector():
         If the parameters are not provided, use the parameters loaded from the configuration.
         """
 
-        if not self.is_connected:
+        if not self.__is_connected:
             self.__conn = pymysql.connect(
                 host=self.__host if host is None else host,
                 user=self.__user if user is None else user,
@@ -70,10 +71,9 @@ class DatabaseConnector():
         Close the connection to the database.
         """
 
-        if self.is_connected:
+        if self.__is_connected:
             try:
                 self.__conn.close()
-                self.__conn = None
             except pymysql.err.Error:
                 pass
     

@@ -49,4 +49,4 @@ def search():
             spider = Suning(get_webdriver())
     results = spider.crawl(product)
     products = [result[0].to_dict() | result[1].to_dict() for result in results]
-    return render_template('home/search.html', products=products)
+    return render_template('home/search.html', query=product, products=products)

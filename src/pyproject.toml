@@ -1,6 +1,6 @@
 [project]
 name = "Budget_Bee"
-version = "0.10.0"
+version = "1.0.0"
 description = "A cross-platform budget management tool to help users compare prices and make the best decisions."
 keywords = ["full-stack", "Flask", "MySQL", "Python", "B/S", "ZJU"]
 authors = [

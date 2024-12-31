@@ -55,6 +55,7 @@
       margin-left: 270px;
       margin-right: auto;
       padding-top: 20px;
+      padding: 40px;
       background-color: white;
       border-radius: 10px;
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -124,6 +125,34 @@
 
     .search-bar button:hover {
       background-color: #0056b3;
+    }
+
+    /* 下拉列表 */
+    .search-bar select {
+      padding: 10px;
+      font-size: 1rem;
+      border-radius: 0.25rem;
+      width: 100px; /* 设置下拉列表的宽度 */
+      background-color: white;
+      border: 1px solid #ccc;
+      margin-right: 1px;
+
+      /* 取消默认的浏览器样式 */
+      appearance: none;
+      -webkit-appearance: none; /* Safari */
+      -moz-appearance: none; /* Firefox */
+      
+      /* 设置背景图片，模拟箭头 */
+      background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"%3E%3Cpath d="M7 10l5 5 5-5z" fill="%23999" /%3E%3C/svg%3E');
+      background-repeat: no-repeat;
+      background-position: right 5px center;
+      background-size: 1em;
+    }
+
+    /* 让下拉框更美观 */
+    .search-bar select:focus {
+      outline: none;
+      border-color: #007bff;
     }
 
     /* 手机端优化，屏幕小于 768px 时 */
@@ -246,7 +275,13 @@
     <!-- 搜索框 -->
     <div class="search-bar" id="search-bar">
       <form action="{{ url_for('home.search') }}" method="get" class="d-flex w-100">
-        <input type="text" name="q" placeholder="搜索您心仪的商品..." class="form-control" required>
+            <!-- 电商平台选择下拉列表 -->
+            <select name="platform" class="form-control" style="max-width: 200px; margin-right: 10px;">
+              <option value="suning">苏宁易购</option>
+              <option value="dangdang">当当网</option>
+            </select>
+
+        <input type="text" name="product" placeholder="搜索您心仪的商品..." class="form-control" required>
         <button type="submit" class="btn btn-primary">搜索</button>
       </form>
     </div>
@@ -267,9 +302,10 @@
       </div>
 
       <!-- 主内容区 -->
+      </br>
       <div class="col-md-9 main-content">
         <div class="welcome-msg">
-          搜索结果：
+          搜索结果："{{ query }}"
         </div>
 
         <!-- 搜索结果商品展示 -->
@@ -282,7 +318,7 @@
                   <a href="{{ product.url }}" class="text-decoration-none text-primary">{{ product.name }}</a>
                 </h5>
                 <p class="product-card-text">{{ product.description }}</p>
-                <p class="price">{{ product.price }}元</p>
+                <p class="price">¥{{ product.price }}</p>
                 <p class="store-name">{{ product.shop }}</p>
               </div>
             </div>
