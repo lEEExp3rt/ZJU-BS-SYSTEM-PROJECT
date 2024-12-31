@@ -6,8 +6,8 @@ The authentication process includes:
 - Register
 """
 
-from backend import db, email_manager
-from backend.utils.EmailManager import validate_email, generate_verification_code
+from app import db, email_manager
+from app.utils.EmailManager import validate_email, generate_verification_code
 import functools
 from pymysql import IntegrityError
 from flask import Blueprint, flash, g, jsonify, redirect, render_template, request, session, url_for

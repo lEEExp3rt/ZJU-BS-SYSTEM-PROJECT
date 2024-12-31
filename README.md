@@ -14,7 +14,7 @@
 │   ├── Assignment.pdf
 │   └── Design.md
 └── src
-    ├── backend
+    ├── app
     │   ├── App.py
     │   ├── Configs.py
     │   ├── __init__.py

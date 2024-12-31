@@ -2,8 +2,8 @@
 This is the test suite for the database module.
 """
 
-from backend.database.DatabaseConnector import DatabaseConnector
-from backend.Configs import Config
+from app.database.DatabaseConnector import DatabaseConnector
+from app.Configs import Config
 
 def test_db():
     """

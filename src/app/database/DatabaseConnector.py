@@ -113,5 +113,5 @@ def close_db(e=None) -> None:
     This function comes from Flask.
     """
 
-    from backend import db
+    from app import db
     db.close()

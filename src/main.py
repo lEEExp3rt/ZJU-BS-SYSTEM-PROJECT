@@ -1,4 +1,4 @@
-from backend.App import APP
+from app.App import APP
 
 if __name__ == '__main__':
     app = APP()

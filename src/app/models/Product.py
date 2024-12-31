@@ -2,7 +2,7 @@
 This module defines the `Product` entity model.
 """
 
-from backend.utils.Platforms import Platform
+from app.utils.Platforms import Platform
 from datetime import datetime
 from typing import Tuple, overload
 

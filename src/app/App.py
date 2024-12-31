@@ -4,9 +4,9 @@ This module defines the Budget Bee Application class.
 This is a wrapper class.
 """
 
-from backend import configs, db, email_manager
-from backend.database.DatabaseConnector import close_db
-from backend.database.DatabaseInitializer import init_db
+from app import configs, db, email_manager
+from app.database.DatabaseConnector import close_db
+from app.database.DatabaseInitializer import init_db
 
 import os
 from flask import Flask
@@ -24,9 +24,8 @@ class APP:
 
         self.__app = Flask(
             import_name=configs.app_name,
-            instance_path=os.path.abspath(configs.instance_path),
-            template_folder=os.path.abspath("src/backend/templates"),
-            static_folder=os.path.abspath("src/backend/static")
+            template_folder=configs.app_template_path,
+            static_folder=configs.app_static_path
         )
 
         # Set the configuration for the Flask app.

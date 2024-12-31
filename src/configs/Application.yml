@@ -12,7 +12,8 @@ Database:
 # Build Configuration.
 Build:
   name: "Budget Bee"
-  instance_path: "bin"
+  template_path: "src/app/templates"
+  static_path: "src/app/static"
 
 # Email Configuration.
 Email:

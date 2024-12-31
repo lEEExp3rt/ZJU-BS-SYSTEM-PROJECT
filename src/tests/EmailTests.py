@@ -2,8 +2,8 @@
 This is a test suite for email module.
 """
 
-from backend.utils.EmailManager import EmailManager
-from backend.Configs import Config
+from app.utils.EmailManager import EmailManager
+from app.Configs import Config
 
 def test_send_email():
     """

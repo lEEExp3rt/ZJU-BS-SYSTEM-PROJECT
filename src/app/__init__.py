@@ -1,11 +1,11 @@
 """
-This file initializes the backend package and build global instances.
+This file initializes the application package and build global instances.
 """
 
-from backend.Configs import Config
-from backend.database.DatabaseConnector import DatabaseConnector
-from backend.utils.EmailManager import EmailManager
-from backend.services.Spider import SpiderManager
+from app.Configs import Config
+from app.database.DatabaseConnector import DatabaseConnector
+from app.utils.EmailManager import EmailManager
+from app.services.Spider import SpiderManager
 
 
 ''' Global Configuration Instance '''

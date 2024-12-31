@@ -2,11 +2,11 @@
 This module defines the base spider class.
 """
 
-from backend.models.Product import Product
-from backend.models.Price import Price
-from backend.utils.Platforms import Platform
-from backend.services import Dangdang, Suning
-from backend.utils.WebDriver import get_webdriver
+from app.models.Product import Product
+from app.models.Price import Price
+from app.utils.Platforms import Platform
+from app.services import Dangdang, Suning
+from app.utils.WebDriver import get_webdriver
 from typing import List, Tuple
 
 class SpiderManager:

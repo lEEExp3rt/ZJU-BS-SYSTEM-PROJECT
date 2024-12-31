@@ -2,7 +2,7 @@
 This module is used to initialize the database.
 """
 
-from backend import db
+from app import db
 
 import os
 import pymysql

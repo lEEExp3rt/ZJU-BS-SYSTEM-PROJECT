@@ -25,7 +25,8 @@ class Config:
         self.__db_database: str = None
         self.__db_charset: str = None
         self.__app_name: str = None
-        self.__app_instance_path: str = None
+        self.__app_template_path: str = None
+        self.__app_static_path: str = None
         self.__email_smtp: str = None
         self.__emial_port: int = None
         self.__email_sendername: str = None
@@ -42,7 +43,8 @@ class Config:
                 self.__db_database = config['Database']['database']
                 self.__db_charset = config['Database']['charset']
                 self.__app_name = config['Build']['name']
-                self.__app_instance_path = config['Build']['instance_path']
+                self.__app_template_path = config['Build']['template_path']
+                self.__app_static_path = config['Build']['static_path']
                 self.__email_smtp = config['Email']['smtp']
                 self.__emial_port = config['Email']['port']
                 self.__email_sendername = config['Email']['sendername']
@@ -110,12 +112,20 @@ class Config:
         return self.__app_name
 
     @property
-    def instance_path(self) -> str:
+    def app_template_path(self) -> str:
         """
-        Get the path to the instance directory.
+        Get the absolute path of the application's template directory.
         """
 
-        return self.__app_instance_path
+        return os.path.abspath(self.__app_template_path)
+    
+    @property
+    def app_static_path(self) -> str:
+        """
+        Get the absolute path of the application's static directory.
+        """
+
+        return os.path.abspath(self.__app_static_path)
     
     @property
     def email_smtp(self) -> str:

@@ -2,10 +2,10 @@
 This module provides the views for the home page after login.
 """
 
-from backend import db, spiders
-from backend.views.authentication import login_required
-from backend.utils.Platforms import Platform
-from backend.models.Product import Product
+from app import db, spiders
+from app.views.authentication import login_required
+from app.utils.Platforms import Platform
+from app.models.Product import Product
 from flask import Blueprint, render_template, redirect, url_for, flash, session, request, jsonify
 import pymysql.err
 

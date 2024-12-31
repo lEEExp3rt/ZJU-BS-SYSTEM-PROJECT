@@ -2,9 +2,9 @@
 This module defines the spider used to crawl from Suning.
 """
 
-from backend.models.Product import Product
-from backend.models.Price import Price
-from backend.utils.Platforms import Platform
+from app.models.Product import Product
+from app.models.Price import Price
+from app.utils.Platforms import Platform
 import re
 import mmh3
 from datetime import datetime
