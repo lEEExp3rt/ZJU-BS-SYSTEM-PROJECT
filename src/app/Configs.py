@@ -27,6 +27,8 @@ class Config:
         self.__app_name: str = None
         self.__app_template_path: str = None
         self.__app_static_path: str = None
+        self.__runtime_host: str = None
+        self.__runtime_port: int = None
         self.__email_smtp: str = None
         self.__emial_port: int = None
         self.__email_sendername: str = None
@@ -45,6 +47,8 @@ class Config:
                 self.__app_name = config['Build']['name']
                 self.__app_template_path = config['Build']['template_path']
                 self.__app_static_path = config['Build']['static_path']
+                self.__runtime_host = config['Runtime']['host']
+                self.__runtime_port = config['Runtime']['port']
                 self.__email_smtp = config['Email']['smtp']
                 self.__emial_port = config['Email']['port']
                 self.__email_sendername = config['Email']['sendername']
@@ -126,6 +130,22 @@ class Config:
         """
 
         return os.path.abspath(self.__app_static_path)
+    
+    @property
+    def runtime_host(self) -> str:
+        """
+        Get the host to run the application.
+        """
+
+        return self.__runtime_host
+
+    @property
+    def runtime_port(self) -> int:
+        """
+        Get the port to run the application.
+        """
+
+        return self.__runtime_port
     
     @property
     def email_smtp(self) -> str:

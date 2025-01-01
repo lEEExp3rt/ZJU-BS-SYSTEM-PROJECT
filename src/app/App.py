@@ -4,11 +4,10 @@ This module defines the Budget Bee Application class.
 This is a wrapper class.
 """
 
-from app import configs, db, email_manager
+from app import configs
 from app.database.DatabaseConnector import close_db
 from app.database.DatabaseInitializer import init_db
 
-import os
 from flask import Flask
 
 
@@ -51,11 +50,13 @@ class APP:
 
         init_db()
 
-    def run(self, debug=False):
+    def run(self, host: str = configs.runtime_host, port: int = configs.runtime_port, debug=False):
         """
         Run the Flask app.
 
-        :param debug: Whether to run in debug mode.
+        :param host: The host to run the app on. If not specified, it will use the default value loaded from the config.
+        :param port: The port to run the app on. If not specified, it will use the default value loaded from the config.
+        :param debug: Whether to run in debug mode. Default is False.
         """
 
-        self.__app.run(debug=debug)
+        self.__app.run( host=host, port=port, debug=debug)
