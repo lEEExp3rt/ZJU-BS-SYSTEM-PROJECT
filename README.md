@@ -2,97 +2,60 @@
 
 浙江大学2024秋冬B/S体系软件设计项目：商品比价网站
 
+## User
+
+首先构建环境，然后运行主程序
+
+```Shell
+pip install . [--no-deps] # 下载依赖包
+python main.py            # 运行主程序
+```
+
 ## Structure
 
 ```Shell
 .
-├── CHANGELOG.md
-├── README.md
-├── TODO.md
-├── clean.sh
-├── docs
-│   ├── Assignment.pdf
-│   └── Design.md
-└── src
-    ├── app
-    │   ├── App.py
-    │   ├── Configs.py
+├── README.md                         # 自述文档
+├── clean.sh                          # 清除构建产物脚本
+├── docs                              # 文档
+│   ├── Assignment.pdf                # 项目要求
+│   ├── CHANGELOG.md                  # 变更日志
+│   ├── Design.md                     # 设计报告
+│   ├── Design.pdf
+│   ├── Develop.md                    # 开发报告与测试报告
+│   ├── Develop.pdf
+│   ├── TODO.md                       # 待办事项
+│   └── assets
+│       └── ...
+├── pyproject.toml                    # 项目依赖
+└── src                               # 源代码
+    ├── app                           # 应用包
+    │   ├── App.py                    # 顶层应用类
+    │   ├── Configs.py                # 配置文件读取类
     │   ├── __init__.py
-    │   ├── database
+    │   ├── database                  # 数据库模块
     │   │   ├── DatabaseConnector.py
     │   │   ├── DatabaseInitializer.py
     │   │   └── __init__.py
-    │   ├── models
+    │   ├── models                    # 数据模型
     │   │   ├── Price.py
     │   │   ├── Product.py
     │   │   ├── Subscription.py
     │   │   ├── User.py
     │   │   └── __init__.py
-    │   ├── services
+    │   ├── services                  # 爬虫服务模块
     │   │   ├── Dangdang.py
     │   │   ├── Spider.py
     │   │   ├── Suning.py
     │   │   └── __init__.py
-    │   ├── static
+    │   ├── static                    # 前端样式
     │   │   ├── css
-    │   │   │   ├── bootstrap-grid.css
-    │   │   │   ├── bootstrap-grid.css.map
-    │   │   │   ├── bootstrap-grid.min.css
-    │   │   │   ├── bootstrap-grid.min.css.map
-    │   │   │   ├── bootstrap-grid.rtl.css
-    │   │   │   ├── bootstrap-grid.rtl.css.map
-    │   │   │   ├── bootstrap-grid.rtl.min.css
-    │   │   │   ├── bootstrap-grid.rtl.min.css.map
-    │   │   │   ├── bootstrap-reboot.css
-    │   │   │   ├── bootstrap-reboot.css.map
-    │   │   │   ├── bootstrap-reboot.min.css
-    │   │   │   ├── bootstrap-reboot.min.css.map
-    │   │   │   ├── bootstrap-reboot.rtl.css
-    │   │   │   ├── bootstrap-reboot.rtl.css.map
-    │   │   │   ├── bootstrap-reboot.rtl.min.css
-    │   │   │   ├── bootstrap-reboot.rtl.min.css.map
-    │   │   │   ├── bootstrap-utilities.css
-    │   │   │   ├── bootstrap-utilities.css.map
-    │   │   │   ├── bootstrap-utilities.min.css
-    │   │   │   ├── bootstrap-utilities.min.css.map
-    │   │   │   ├── bootstrap-utilities.rtl.css
-    │   │   │   ├── bootstrap-utilities.rtl.css.map
-    │   │   │   ├── bootstrap-utilities.rtl.min.css
-    │   │   │   ├── bootstrap-utilities.rtl.min.css.map
-    │   │   │   ├── bootstrap.css
-    │   │   │   ├── bootstrap.css.map
-    │   │   │   ├── bootstrap.min.css
-    │   │   │   ├── bootstrap.min.css.map
-    │   │   │   ├── bootstrap.rtl.css
-    │   │   │   ├── bootstrap.rtl.css.map
-    │   │   │   ├── bootstrap.rtl.min.css
-    │   │   │   ├── bootstrap.rtl.min.css.map
-    │   │   │   └── style.css
+    │   │   │   └── ...
     │   │   ├── img
-    │   │   │   ├── android-chrome-192x192.png
-    │   │   │   ├── android-chrome-512x512.png
-    │   │   │   ├── apple-touch-icon.png
-    │   │   │   ├── email.svg
-    │   │   │   ├── favicon-16x16.png
-    │   │   │   ├── favicon-32x32.png
-    │   │   │   ├── favicon.ico
-    │   │   │   ├── github.svg
-    │   │   │   ├── logo.svg
-    │   │   │   └── logo3.svg
+    │   │   │   └── ...
     │   │   └── js
-    │   │       ├── bootstrap.bundle.js
-    │   │       ├── bootstrap.bundle.js.map
-    │   │       ├── bootstrap.bundle.min.js
-    │   │       ├── bootstrap.bundle.min.js.map
-    │   │       ├── bootstrap.esm.js
-    │   │       ├── bootstrap.esm.js.map
-    │   │       ├── bootstrap.esm.min.js
-    │   │       ├── bootstrap.esm.min.js.map
-    │   │       ├── bootstrap.js
-    │   │       ├── bootstrap.js.map
-    │   │       ├── bootstrap.min.js
-    │   │       └── bootstrap.min.js.map
-    │   ├── templates
+    │   │       └── ...
+    │   ├── templates                  # 页面模板
     │   │   ├── authentication
     │   │   │   ├── login.html
     │   │   │   └── register.html
@@ -102,26 +65,25 @@
     │   │   │   ├── home.html
     │   │   │   └── search.html
     │   │   └── index.html
-    │   ├── utils
+    │   ├── utils                      # 项目工具
     │   │   ├── EmailManager.py
     │   │   ├── Platforms.py
     │   │   ├── WebDriver.py
     │   │   └── __init__.py
-    │   └── views
+    │   └── views                      # 视图模块
     │       ├── __init__.py
     │       ├── authentication.py
     │       ├── home.py
     │       └── index.py
-    ├── configs
+    ├── configs                        # 配置信息
     │   ├── Application.yml
     │   └── DBInitializer.sql
-    ├── main.py
-    ├── pyproject.toml
-    ├── resources
+    ├── main.py                        # 主程序
+    ├── resources                      # 第三方资源
     │   ├── LICENSE.chromedriver
     │   ├── THIRD_PARTY_NOTICES.chromedriver
     │   └── chromedriver
-    └── tests
+    └── tests                          # 测试文件夹
         ├── DatabaseTests.py
         └── EmailTests.py
 ```

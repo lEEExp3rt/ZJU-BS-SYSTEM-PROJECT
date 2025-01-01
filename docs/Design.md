@@ -4,7 +4,7 @@
 
 - 项目名称：商品比价网站
 - 项目周期：2024-09-01 ~ 2025-01-01
-- 项目仓库：[GitHub](https://github.com/lEEExp3rt/ZJU-BS-SYSTEM-PROJECT)
+- 项目仓库：[GitHub - ZJU-BS-SYSTEM-PROJECT](https://github.com/lEEExp3rt/ZJU-BS-SYSTEM-PROJECT)
 - 项目概述：任选Web开发技术实现一个商品价格比较网站，要求实现
     - 用户注册与登录
     - 商品查询与比较
@@ -54,14 +54,14 @@ architecture-beta
 
 - 前端
     - HTML/CSS/JavaScript
-    - 前端框架：Vue.js
+    - 前端框架：Bootstrap
     - 数据可视化框架：Chart.js
     - 移动端适配框架：Bootstrap
 - 后端
     - 开发语言：Python
     - 开发框架：Flask
     - 数据库：MySQL
-    - 爬虫框架：Scrapy
+    - 爬虫：selenium
 - 开发环境
     - 操作系统：WSL2 + Ubuntu-24.04
     - 包管理：Miniconda
@@ -73,12 +73,18 @@ architecture-beta
 #### 3.3.1 主模块
 
 - 主要功能
+    - 首页
+        - 回到首页
+    - 收藏
+        - 进入关注的商品列表
     - 菜单
         - 修改用户信息
         - 注销用户
     - 查询
         - 查询商品名称
         - 价格比较
+        - 进入对应商品的详细链接
+        - 商品价格的历史走势图
     - 订阅
         - 是否开启订阅
         - 定时器功能
@@ -104,7 +110,6 @@ architecture-beta
         - 商品价格
         - 商品品类
         - 商品规格
-        - 商品条码
         - 商品图片
     - 爬虫
         - 电商平台信息爬取
@@ -144,7 +149,7 @@ architecture-beta
 | :--: | :--: | :--: | :--: |
 | `user_id` | `int` | 主键&自增&非空 | 用户ID |
 | `user_name` | `varchar(63)` | 非空&唯一 | 用户名 |
-| `password` | `varchar(63)` | 非空 | 用户密码 |
+| `password` | `varchar(127)` | 非空 | 用户密码哈希值 |
 | `email` | `varchar(255)` | 非空&唯一 | 用户邮箱 |
 | `create_time` | `timestamp` | 非空 | 创建时间 |
 
@@ -152,19 +157,22 @@ architecture-beta
 
 | 属性名 | 数据类型 | 属性 | 备注 |
 | :--: | :--: | :--: | :--: |
-| `product_id` | `int` | 主键&非空&自增 | 商品ID |
-| `product_name` | `varchar(63)` | 非空 | 商品名 |
-| `category` | `varchar(63)` | 默认值空 | 商品类别 |
+| `product_id` | `bigint` | 主键&非空&自增 | 商品ID |
+| `product_name` | `varchar(255)` | 非空 | 商品名 |
 | `description` | `varchar(255)` | 默认值空 | 商品说明 |
-| `scale` | `varchar(63)` | 默认值空 | 商品规格 |
+| `url` | `varchar(1023)` | 默认值空 | 商品源 |
 | `image` | `varchar(255)` | 默认值空 | 商品图片URL |
+| `category` | `varchar(255)` | 默认值空 | 商品类别 |
+| `scale` | `varchar(63)` | 默认值空 | 商品规格 |
+| `shop` | `varchar(63)` | 默认值空 | 商品店铺名 |
+| `checkpoint` | `timestamp` | 非空 | 最近更新时间 |
 | `platform` | `varchar(15)` | 默认值空 | 商品信息来源平台 |
 
 #### 3.4.3 商品价格表 `prices`
 
 | 属性名 | 数据类型 | 属性 | 备注 |
 | :--: | :--: | :--: | :--: |
-| `product_id` | `int` | 非空&外键 | 商品ID |
+| `product_id` | `bigint` | 非空&外键 | 商品ID |
 | `price` | `decimal(10,2)` | 默认值`0.00` | 商品价格 |
 | `checkpoint` | `timestamp` | 非空 | 商品平台 |
 
@@ -185,41 +193,40 @@ architecture-beta
 ```mermaid
 erDiagram
     USERS {
-        int user_id PK "用户ID"
-        varchar user_name "用户名"
-        varchar password "用户密码"
-        varchar email "用户邮箱"
-        timestamp create_time "创建时间"
+        INT user_id PK
+        VARCHAR user_name
+        VARCHAR password
+        VARCHAR email
+        TIMESTAMP create_time
     }
-
     PRODUCTS {
-        int product_id PK "商品ID"
-        varchar product_name "商品名"
-        varchar category "商品类别"
-        varchar description "商品说明"
-        varchar scale "商品规格"
-        varchar image "商品图片URL"
-        varchar platform "商品信息来源平台"
+        BIGINT product_id PK
+        VARCHAR product_name
+        VARCHAR description
+        VARCHAR url
+        VARCHAR image
+        VARCHAR category
+        VARCHAR scale
+        VARCHAR shop
+        TIMESTAMP checkpoint
+        VARCHAR platform
     }
-
     PRICES {
-        int product_id FK "商品ID"
-        decimal price "商品价格"
-        timestamp checkpoint PK "更新时间"
+        BIGINT product_id FK
+        DECIMAL price
+        TIMESTAMP checkpoint
     }
-
     SUBSCRIPTIONS {
-        int subscription_id PK "订阅器ID"
-        int product_id FK "商品ID"
-        int user_id FK "用户ID"
-        time timer "定时器"
-        boolean enable "定时器状态"
+        INT subscription_id PK
+        BIGINT product_id FK
+        INT user_id FK
+        TIME timer
+        BOOLEAN enable
     }
 
-    %% 定义关系
-    USERS ||--o{ SUBSCRIPTIONS : "user_id"
-    PRODUCTS ||--o{ SUBSCRIPTIONS : "product_id"
-    PRODUCTS ||--o{ PRICES : "product_id"
+    USERS ||--o| SUBSCRIPTIONS : has
+    PRODUCTS ||--o| SUBSCRIPTIONS : is_subscribed
+    PRODUCTS ||--o| PRICES : has_price
 
 ```
 
