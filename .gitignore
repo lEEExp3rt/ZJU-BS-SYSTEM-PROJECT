@@ -6,4 +6,6 @@ __pycache__/
 
 .pytest_cache/
 
-bin/
+build/
+
+Budget_Bee.egg-info/

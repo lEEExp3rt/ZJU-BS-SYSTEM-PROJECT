@@ -1,6 +1,10 @@
+[build-system]
+requires = [ "setuptools>=75", "wheel" ]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "Budget_Bee"
-version = "2.0.0"
+version = "2.1.1"
 description = "A cross-platform budget management tool to help users compare prices and make the best decisions."
 keywords = ["full-stack", "Flask", "MySQL", "Python", "B/S", "ZJU"]
 authors = [
@@ -18,3 +22,10 @@ dependencies = [
   "selenium",
   "mmh3"
 ]
+
+[tool.setuptools]
+packages = ['src']
+include-package-data = true
+
+[tool.setuptools.package-data]
+'src' = ['**']
