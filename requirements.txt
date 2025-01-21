@@ -1,0 +1,6 @@
+Flask
+PyMySQL
+PyYAML
+cryptography
+mmh3
+selenium

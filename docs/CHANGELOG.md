@@ -2,6 +2,16 @@
 
 关于本项目的变更日志
 
+## 2.2.1 - 2025-01-22
+
+### Added
+
+- 添加`requirements.txt`
+
+### Removed
+
+- 移除`pyproject.toml`
+
 ## 2.2.0 - 2025-01-01
 
 ### Added
